@@ -1,8 +1,6 @@
 #include "ofxZmqPublisher.h"
 
-extern zmq::context_t zmq_context;
-
-ofxZmqPublisher::ofxZmqPublisher() : publisher(zmq_context, ZMQ_PUB)
+ofxZmqPublisher::ofxZmqPublisher() : publisher(ofxZmqContext(), ZMQ_PUB)
 {
 	bindAddress.clear();
 }

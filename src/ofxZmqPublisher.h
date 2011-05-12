@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "zmq.hpp"
+#include "ofxZmq.h"
 
 class ofxZmqPublisher
 {

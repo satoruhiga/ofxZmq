@@ -1,8 +1,6 @@
 #include "ofxZmqSubscriber.h"
 
-extern zmq::context_t zmq_context;
-
-ofxZmqSubscriber::ofxZmqSubscriber() : subscriber(zmq_context, ZMQ_SUB)
+ofxZmqSubscriber::ofxZmqSubscriber() : subscriber(ofxZmqContext(), ZMQ_SUB)
 {
 	zmq::pollitem_t item;
 	item.socket = subscriber;
@@ -12,6 +10,7 @@ ofxZmqSubscriber::ofxZmqSubscriber() : subscriber(zmq_context, ZMQ_SUB)
 	items[0] = item;
 	
 	connectAddress.clear();
+	setFilter("");
 }
 
 void ofxZmqSubscriber::addConnectAddress(string addr)
@@ -24,7 +23,7 @@ void ofxZmqSubscriber::addConnectAddress(string addr)
 	
 	connectAddress.push_back(addr);
 	
-	subscriber.bind(addr.c_str());
+	subscriber.connect(addr.c_str());
 }
 
 vector<string> ofxZmqSubscriber::listConnectAddress()
@@ -63,8 +62,7 @@ bool ofxZmqSubscriber::getNextMessage(vector<uint8_t> &container)
 	do
 	{
 		zmq::message_t m;
-		int rc = subscriber.recv(&m);
-		assert(rc == 0);
+		subscriber.recv(&m);
 		
 		subscriber.getsockopt(ZMQ_RCVMORE, &more, &more_size);
 		
