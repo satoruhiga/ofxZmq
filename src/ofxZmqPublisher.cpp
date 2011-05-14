@@ -9,7 +9,7 @@ void ofxZmqPublisher::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
-bool ofxZmqPublisher::send(const vector<uint8_t> &data, bool more)
+bool ofxZmqPublisher::send(void *data, size_t len, bool more)
 {
-	ofxZmqSocket::send(data, more);
+	ofxZmqSocket::send(data, len, more);
 }

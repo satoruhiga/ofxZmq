@@ -6,30 +6,30 @@ ofxZmqPair::ofxZmqPair() : ofxZmqSocket(ZMQ_PAIR)
 
 void ofxZmqPair::connect(string addr)
 {
-	ofxZmqPair::connect(addr);
+	ofxZmqSocket::connect(addr);
 }
 
 void ofxZmqPair::bind(string addr)
 {
-	ofxZmqPair::bind(addr);
+	ofxZmqSocket::bind(addr);
 }
 
-void ofxZmqPair::send(const vector<uint8_t> &data, bool more)
+void ofxZmqPair::send(void *data, size_t len, bool more)
 {
-	ofxZmqPair::send(data, more);
+	ofxZmqSocket::send(data, len, more);
 }
 
 void ofxZmqPair::receive(vector<uint8_t> &data)
 {
-	return ofxZmqPair::receive(data);
+	return ofxZmqSocket::receive(data);
 }
 
 bool ofxZmqPair::hasWaitingMessage()
 {
-	return ofxZmqPair::hasWaitingMessage();
+	return ofxZmqSocket::hasWaitingMessage();
 }
 
 bool ofxZmqPair::getNextMessage(vector<uint8_t> &data)
 {
-	return ofxZmqPair::getNextMessage(data);
+	return ofxZmqSocket::getNextMessage(data);
 }
