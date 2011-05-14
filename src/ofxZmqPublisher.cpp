@@ -1,41 +1,15 @@
 #include "ofxZmqPublisher.h"
 
-ofxZmqPublisher::ofxZmqPublisher() : publisher(ofxZmqContext(), ZMQ_PUB)
+ofxZmqPublisher::ofxZmqPublisher() : ofxZmqSocket(ZMQ_PUB)
 {
-	bindAddress.clear();
 }
 
-void ofxZmqPublisher::addBindAddress(string addr)
+void ofxZmqPublisher::bind(string addr)
 {
-	if (find(bindAddress.begin(), bindAddress.end(), addr) != bindAddress.end())
-	{
-		ofLog(OF_LOG_WARNING, "%s is already binded.", addr.c_str());
-		return;
-	}
-	
-	bindAddress.push_back(addr);
-	
-	publisher.bind(addr.c_str());
+	ofxZmqSocket::bind(addr);
 }
 
-vector<string> ofxZmqPublisher::listBindAddress()
+bool ofxZmqPublisher::send(const vector<uint8_t> &data, bool more)
 {
-	return bindAddress;
-}
-
-void ofxZmqPublisher::dumpBindAddress()
-{
-	cout << "===" << endl;
-	for (int i = 0; i < bindAddress.size(); i++)
-	{
-		cout << bindAddress[i] << endl;
-	}
-	cout << "===" << endl;
-}
-
-bool ofxZmqPublisher::send(uint8_t *data, size_t len, bool more)
-{
-	zmq::message_t m(len);
-	memcpy(m.data(), data, len);
-	return publisher.send(m, more ? ZMQ_SNDMORE : 0) == 0;
+	ofxZmqSocket::send(data, more);
 }

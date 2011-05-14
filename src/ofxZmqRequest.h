@@ -3,22 +3,18 @@
 #include "ofMain.h"
 #include "ofxZmq.h"
 
-class ofxZmqSubscriber : public ofxZmqSocket
+class ofxZmqRequest : public ofxZmqSocket
 {
 public:
 	
-	ofxZmqSubscriber();
+	ofxZmqRequest();
 	
 	void connect(string addr);
-	void setFilter(string filter);
-
+	
+	void send(const vector<uint8_t> &data, bool more = false);
 	void receive(vector<uint8_t> &data);
 	
 	bool hasWaitingMessage();
 	bool getNextMessage(vector<uint8_t> &data);
-
-private:
-	
-	string filter;
 	
 };
