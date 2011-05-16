@@ -11,7 +11,7 @@ public:
 	
 	void bind(string addr);
 	
-	bool send(const void *data, size_t len, bool more = false);
-	bool send(void *data, size_t len, bool more = false);
+	bool send(const void *data, size_t len, bool nonblocking = false, bool more = false);
+	bool send(void *data, size_t len, bool nonblocking = false, bool more = false);
 	
 };

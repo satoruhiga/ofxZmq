@@ -9,14 +9,14 @@ void ofxZmqReply::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
-void ofxZmqReply::send(const void *data, size_t len, bool more)
+void ofxZmqReply::send(const void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
-void ofxZmqReply::send(void *data, size_t len, bool more)
+void ofxZmqReply::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
 void ofxZmqReply::receive(vector<uint8_t> &data)

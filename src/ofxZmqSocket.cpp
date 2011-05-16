@@ -28,18 +28,30 @@ void ofxZmqSocket::bind(string addr)
 	socket.bind(addr.c_str());
 }
 
-bool ofxZmqSocket::send(const void *data, size_t len, bool more)
+bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool more)
 {
 	zmq::message_t m(len);
 	memcpy(m.data(), data, len);
-	return socket.send(m, more ? ZMQ_SNDMORE : 0) == 0;
+
+	int flags = 0;
+	
+	if (more) flags |= ZMQ_SNDMORE;
+	if (nonblocking) flags |= ZMQ_NOBLOCK;
+	
+	return socket.send(m, flags) == 0;
 }
 
-bool ofxZmqSocket::send(void *data, size_t len, bool more)
+bool ofxZmqSocket::send(void *data, size_t len, bool nonblocking, bool more)
 {
 	zmq::message_t m(len);
 	memcpy(m.data(), data, len);
-	return socket.send(m, more ? ZMQ_SNDMORE : 0) == 0;
+
+	int flags = 0;
+	
+	if (more) flags |= ZMQ_SNDMORE;
+	if (nonblocking) flags |= ZMQ_NOBLOCK;
+	
+	return socket.send(m, flags) == 0;
 }
 
 void ofxZmqSocket::receive(vector<uint8_t> &data)

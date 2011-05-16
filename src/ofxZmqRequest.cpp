@@ -9,14 +9,14 @@ void ofxZmqRequest::connect(string addr)
 	ofxZmqSocket::connect(addr);
 }
 
-void ofxZmqRequest::send(const void *data, size_t len, bool more)
+void ofxZmqRequest::send(const void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
-void ofxZmqRequest::send(void *data, size_t len, bool more)
+void ofxZmqRequest::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
 void ofxZmqRequest::receive(vector<uint8_t> &data)

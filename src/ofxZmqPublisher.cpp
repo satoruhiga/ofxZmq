@@ -9,12 +9,12 @@ void ofxZmqPublisher::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
-bool ofxZmqPublisher::send(const void *data, size_t len, bool more)
+bool ofxZmqPublisher::send(const void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
-bool ofxZmqPublisher::send(void *data, size_t len, bool more)
+bool ofxZmqPublisher::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }

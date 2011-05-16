@@ -19,8 +19,8 @@ protected:
 	void connect(string addr);
 	void bind(string addr);
 
-	bool send(const void *data, size_t len, bool more);
-	bool send(void *data, size_t len, bool more);
+	bool send(const void *data, size_t len, bool nonblocking, bool more);
+	bool send(void *data, size_t len, bool nonblocking, bool more);
 	void receive(vector<uint8_t> &data);
 
 	bool hasWaitingMessage();

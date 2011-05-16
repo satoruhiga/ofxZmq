@@ -14,14 +14,14 @@ void ofxZmqPair::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
-void ofxZmqPair::send(const void *data, size_t len, bool more)
+void ofxZmqPair::send(const void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
-void ofxZmqPair::send(void *data, size_t len, bool more)
+void ofxZmqPair::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send(data, len, more);
+	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
 void ofxZmqPair::receive(vector<uint8_t> &data)

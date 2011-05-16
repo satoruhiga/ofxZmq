@@ -11,8 +11,8 @@ public:
 	
 	void bind(string addr);
 	
-	void send(const void *data, size_t len, bool more = false);
-	void send(void *data, size_t len, bool more = false);
+	void send(const void *data, size_t len, bool nonblocking = false, bool more = false);
+	void send(void *data, size_t len, bool nonblocking = false, bool more = false);
 	void receive(vector<uint8_t> &data);
 	
 	bool hasWaitingMessage();
