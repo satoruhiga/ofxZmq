@@ -9,6 +9,11 @@ void ofxZmqRequest::connect(string addr)
 	ofxZmqSocket::connect(addr);
 }
 
+void ofxZmqRequest::send(const void *data, size_t len, bool more)
+{
+	ofxZmqSocket::send(data, len, more);
+}
+
 void ofxZmqRequest::send(void *data, size_t len, bool more)
 {
 	ofxZmqSocket::send(data, len, more);

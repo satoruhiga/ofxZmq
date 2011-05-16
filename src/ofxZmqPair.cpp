@@ -14,6 +14,11 @@ void ofxZmqPair::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
+void ofxZmqPair::send(const void *data, size_t len, bool more)
+{
+	ofxZmqSocket::send(data, len, more);
+}
+
 void ofxZmqPair::send(void *data, size_t len, bool more)
 {
 	ofxZmqSocket::send(data, len, more);

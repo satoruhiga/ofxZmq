@@ -10,6 +10,8 @@ public:
 	ofxZmqPublisher();
 	
 	void bind(string addr);
+	
+	bool send(const void *data, size_t len, bool more = false);
 	bool send(void *data, size_t len, bool more = false);
 	
 };

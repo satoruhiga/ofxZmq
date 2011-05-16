@@ -28,6 +28,13 @@ void ofxZmqSocket::bind(string addr)
 	socket.bind(addr.c_str());
 }
 
+bool ofxZmqSocket::send(const void *data, size_t len, bool more)
+{
+	zmq::message_t m(len);
+	memcpy(m.data(), data, len);
+	return socket.send(m, more ? ZMQ_SNDMORE : 0) == 0;
+}
+
 bool ofxZmqSocket::send(void *data, size_t len, bool more)
 {
 	zmq::message_t m(len);
