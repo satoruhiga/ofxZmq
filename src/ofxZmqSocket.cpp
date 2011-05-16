@@ -81,9 +81,17 @@ void ofxZmqSocket::setIdentity(string data)
 	socket.setsockopt(ZMQ_IDENTITY, data.data(), data.size());
 }
 
-bool ofxZmqSocket::hasWaitingMessage()
+string ofxZmqSocket::getIdentity()
 {
-	return zmq::poll(items, 1, 0) > 0;
+	char buf[255];
+	size_t size = 0;
+	socket.getsockopt(ZMQ_IDENTITY, buf, &size);
+	return string(buf, buf + size);
+}
+
+bool ofxZmqSocket::hasWaitingMessage(long timeout)
+{
+	return zmq::poll(items, 1, timeout) > 0;
 }
 
 bool ofxZmqSocket::getNextMessage(vector<uint8_t> &data)
