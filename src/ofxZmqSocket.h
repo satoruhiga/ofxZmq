@@ -6,8 +6,11 @@
 
 class ofxZmqSocket
 {
+
+public:
 	
 	void setIdentity(string data);
+	string getIdentity();
 	
 protected:
 	
@@ -23,7 +26,7 @@ protected:
 	bool send(void *data, size_t len, bool more);
 	void receive(vector<uint8_t> &data);
 
-	bool hasWaitingMessage();
+	bool hasWaitingMessage(long timeout = 0);
 	bool getNextMessage(vector<uint8_t> &data);
 	
 };
