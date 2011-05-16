@@ -26,7 +26,7 @@ protected:
 	bool send(void *data, size_t len, bool nonblocking, bool more);
 	void receive(vector<uint8_t> &data);
 
-	bool hasWaitingMessage(long timeout = 0);
+	bool hasWaitingMessage(long timeout_millis = 0);
 	bool getNextMessage(vector<uint8_t> &data);
 	
 };

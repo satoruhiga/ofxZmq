@@ -89,9 +89,9 @@ string ofxZmqSocket::getIdentity()
 	return string(buf, buf + size);
 }
 
-bool ofxZmqSocket::hasWaitingMessage(long timeout)
+bool ofxZmqSocket::hasWaitingMessage(long timeout_millis)
 {
-	return zmq::poll(items, 1, timeout) > 0;
+	return zmq::poll(items, 1, timeout_millis * 1000) > 0;
 }
 
 bool ofxZmqSocket::getNextMessage(vector<uint8_t> &data)
