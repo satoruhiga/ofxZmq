@@ -14,7 +14,7 @@ public:
 
 	void receive(vector<uint8_t> &data);
 	
-	bool hasWaitingMessage();
+	bool hasWaitingMessage(long timeout = 0);
 	bool getNextMessage(vector<uint8_t> &data);
 
 private:

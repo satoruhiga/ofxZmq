@@ -15,9 +15,9 @@ void ofxZmqSubscriber::receive(vector<uint8_t> &data)
 	ofxZmqSocket::receive(data);
 }
 
-bool ofxZmqSubscriber::hasWaitingMessage()
+bool ofxZmqSubscriber::hasWaitingMessage(long timeout)
 {
-	return ofxZmqSocket::hasWaitingMessage();
+	return ofxZmqSocket::hasWaitingMessage(timeout);
 }
 
 bool ofxZmqSubscriber::getNextMessage(vector<uint8_t> &data)
