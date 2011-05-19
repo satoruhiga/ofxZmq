@@ -89,6 +89,21 @@ string ofxZmqSocket::getIdentity()
 	return string(buf, buf + size);
 }
 
+void ofxZmqSocket::setHighWaterMark(long maxQueueSize)
+{
+	int64_t v = maxQueueSize;
+	size_t size = sizeof(int64_t);
+	socket.setsockopt(ZMQ_HWM, &v, size);
+}
+
+long ofxZmqSocket::getHighWaterMark()
+{
+	int64_t v;
+	size_t size = sizeof(int64_t);
+	socket.getsockopt(ZMQ_HWM, &v, &size);
+	return v;
+}
+
 bool ofxZmqSocket::hasWaitingMessage(long timeout_millis)
 {
 	return zmq::poll(items, 1, timeout_millis * 1000) > 0;

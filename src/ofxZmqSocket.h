@@ -12,6 +12,9 @@ public:
 	void setIdentity(string data);
 	string getIdentity();
 	
+	void setHighWaterMark(long maxQueueSize);
+	long getHighWaterMark();
+	
 protected:
 	
 	zmq::socket_t socket;
