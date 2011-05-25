@@ -38,20 +38,21 @@ bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool mor
 	if (more) flags |= ZMQ_SNDMORE;
 	if (nonblocking) flags |= ZMQ_NOBLOCK;
 	
-	return socket.send(m, flags) == 0;
+	try
+	{
+		int rc = socket.send(m, flags);
+		return rc == 0;
+	}
+	catch (zmq::error_t &e)
+	{
+		ofLog(OF_LOG_ERROR, "ofxZmqSocket::send: %s", e.what());
+		return false;
+	}
 }
 
 bool ofxZmqSocket::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	zmq::message_t m(len);
-	memcpy(m.data(), data, len);
-
-	int flags = 0;
-	
-	if (more) flags |= ZMQ_SNDMORE;
-	if (nonblocking) flags |= ZMQ_NOBLOCK;
-	
-	return socket.send(m, flags) == 0;
+	ofxZmqSocket::send((const void*)data, len, nonblocking, more);
 }
 
 void ofxZmqSocket::receive(vector<uint8_t> &data)
