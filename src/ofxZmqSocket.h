@@ -9,6 +9,8 @@ class ofxZmqSocket
 
 public:
 	
+	virtual ~ofxZmqSocket();
+	
 	void setIdentity(string data);
 	string getIdentity();
 	

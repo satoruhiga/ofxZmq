@@ -2,10 +2,15 @@
 
 #include "ofxZmqConfig.h"
 
+static zmq::context_t *ctx = NULL;
+
 static zmq::context_t& ofxZmqContext()
 {
-	static zmq::context_t zmq_context(OFXZMQ_NUM_THREAD);
-	return zmq_context;
+	if (ctx == NULL)
+	{
+		ctx = new zmq::context_t(OFXZMQ_NUM_THREAD);
+	}
+	return *ctx;
 }
 
 ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
@@ -16,6 +21,10 @@ ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
 	item.events = ZMQ_POLLIN;
 	item.revents = 0;
 	items[0] = item;
+}
+
+ofxZmqSocket::~ofxZmqSocket()
+{
 }
 
 void ofxZmqSocket::connect(string addr)

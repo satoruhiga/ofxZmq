@@ -2,11 +2,11 @@
 
 ofxZmqSubscriber::ofxZmqSubscriber() : ofxZmqSocket(ZMQ_SUB)
 {
-	setFilter("");
 }
 
 void ofxZmqSubscriber::connect(string addr)
 {
+	setFilter(filter);
 	ofxZmqSocket::connect(addr);
 }
 
