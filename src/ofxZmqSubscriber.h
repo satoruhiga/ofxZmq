@@ -12,10 +12,10 @@ public:
 	void connect(string addr);
 	void setFilter(string filter);
 
-	void receive(vector<uint8_t> &data);
+	void receive(string &data);
 	
 	bool hasWaitingMessage(long timeout_millis = 0);
-	bool getNextMessage(vector<uint8_t> &data);
+	bool getNextMessage(string &data);
 
 private:
 	

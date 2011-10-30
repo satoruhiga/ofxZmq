@@ -24,7 +24,12 @@ void ofxZmqPair::send(void *data, size_t len, bool nonblocking, bool more)
 	ofxZmqSocket::send(data, len, nonblocking, more);
 }
 
-void ofxZmqPair::receive(vector<uint8_t> &data)
+bool ofxZmqPair::send(const string &data, bool nonblocking, bool more)
+{
+	ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
+}
+
+void ofxZmqPair::receive(string &data)
 {
 	return ofxZmqSocket::receive(data);
 }
@@ -34,7 +39,7 @@ bool ofxZmqPair::hasWaitingMessage(long timeout_millis)
 	return ofxZmqSocket::hasWaitingMessage(timeout_millis);
 }
 
-bool ofxZmqPair::getNextMessage(vector<uint8_t> &data)
+bool ofxZmqPair::getNextMessage(string &data)
 {
 	return ofxZmqSocket::getNextMessage(data);
 }

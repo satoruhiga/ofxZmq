@@ -21,6 +21,8 @@ ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
 	item.events = ZMQ_POLLIN;
 	item.revents = 0;
 	items[0] = item;
+	
+	setHighWaterMark(2);
 }
 
 ofxZmqSocket::~ofxZmqSocket()
@@ -64,7 +66,12 @@ bool ofxZmqSocket::send(void *data, size_t len, bool nonblocking, bool more)
 	ofxZmqSocket::send((const void*)data, len, nonblocking, more);
 }
 
-void ofxZmqSocket::receive(vector<uint8_t> &data)
+bool ofxZmqSocket::send(const string &data, bool nonblocking, bool more)
+{
+	ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
+}
+
+void ofxZmqSocket::receive(string &data)
 {
 	int64_t more;
 	size_t more_size = sizeof(more);
@@ -119,7 +126,7 @@ bool ofxZmqSocket::hasWaitingMessage(long timeout_millis)
 	return zmq::poll(items, 1, timeout_millis * 1000) > 0;
 }
 
-bool ofxZmqSocket::getNextMessage(vector<uint8_t> &data)
+bool ofxZmqSocket::getNextMessage(string &data)
 {
 	if ((items[0].revents & ZMQ_POLLIN) == false) return false;
 	

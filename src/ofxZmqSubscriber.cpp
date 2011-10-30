@@ -10,7 +10,7 @@ void ofxZmqSubscriber::connect(string addr)
 	ofxZmqSocket::connect(addr);
 }
 
-void ofxZmqSubscriber::receive(vector<uint8_t> &data)
+void ofxZmqSubscriber::receive(string &data)
 {
 	ofxZmqSocket::receive(data);
 }
@@ -20,7 +20,7 @@ bool ofxZmqSubscriber::hasWaitingMessage(long timeout_millis)
 	return ofxZmqSocket::hasWaitingMessage(timeout_millis);
 }
 
-bool ofxZmqSubscriber::getNextMessage(vector<uint8_t> &data)
+bool ofxZmqSubscriber::getNextMessage(string &data)
 {
 	return ofxZmqSocket::getNextMessage(data);
 }

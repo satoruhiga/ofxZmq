@@ -13,5 +13,6 @@ public:
 	
 	bool send(const void *data, size_t len, bool nonblocking = false, bool more = false);
 	bool send(void *data, size_t len, bool nonblocking = false, bool more = false);
+	bool send(const string& data, bool nonblocking = false, bool more = false);
 	
 };
