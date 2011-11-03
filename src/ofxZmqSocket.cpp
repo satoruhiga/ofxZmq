@@ -63,12 +63,12 @@ bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool mor
 
 bool ofxZmqSocket::send(void *data, size_t len, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send((const void*)data, len, nonblocking, more);
+	return ofxZmqSocket::send((const void*)data, len, nonblocking, more);
 }
 
 bool ofxZmqSocket::send(const string &data, bool nonblocking, bool more)
 {
-	ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
+	return ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
 }
 
 void ofxZmqSocket::receive(string &data)
