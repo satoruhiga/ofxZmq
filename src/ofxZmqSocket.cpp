@@ -21,8 +21,6 @@ ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
 	item.events = ZMQ_POLLIN;
 	item.revents = 0;
 	items[0] = item;
-	
-	setHighWaterMark(2);
 }
 
 ofxZmqSocket::~ofxZmqSocket()
