@@ -23,3 +23,8 @@ bool ofxZmqPublisher::send(const string& data, bool nonblocking, bool more)
 {
 	return ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
 }
+
+bool ofxZmqPublisher::send(const ofBuffer& data, bool nonblocking, bool more)
+{
+	return ofxZmqSocket::send(data, nonblocking, more);
+}

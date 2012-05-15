@@ -30,9 +30,13 @@ protected:
 	bool send(const void *data, size_t len, bool nonblocking, bool more);
 	bool send(void *data, size_t len, bool nonblocking, bool more);
 	bool send(const string &data, bool nonblocking, bool more);
+	bool send(const ofBuffer &data, bool nonblocking, bool more);
+	
 	void receive(string &data);
+	void receive(ofBuffer &data);
 
 	bool hasWaitingMessage(long timeout_millis = 0);
 	bool getNextMessage(string &data);
+	bool getNextMessage(ofBuffer &data);
 
 };

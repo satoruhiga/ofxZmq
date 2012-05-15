@@ -69,6 +69,12 @@ bool ofxZmqSocket::send(const string &data, bool nonblocking, bool more)
 	return ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
 }
 
+bool ofxZmqSocket::send(const ofBuffer &data, bool nonblocking, bool more)
+{
+	return ofxZmqSocket::send((const void*)data.getBinaryBuffer(), data.size(), nonblocking, more);
+}
+
+
 void ofxZmqSocket::receive(string &data)
 {
 	int64_t more;
@@ -90,6 +96,33 @@ void ofxZmqSocket::receive(string &data)
 	}
 	while (more);
 }
+
+void ofxZmqSocket::receive(ofBuffer &data)
+{
+	int64_t more;
+	size_t more_size = sizeof(more);
+	
+	data.clear();
+	
+	stringstream ss;
+	
+	do
+	{
+		zmq::message_t m;
+		socket.recv(&m);
+		
+		socket.getsockopt(ZMQ_RCVMORE, &more, &more_size);
+		
+		const int numBytes = m.size();
+		const char *src = (const char*)m.data();
+		
+		ss.write(src, numBytes);
+	}
+	while (more);
+	
+	data.set(ss);
+}
+
 
 void ofxZmqSocket::setIdentity(string data)
 {
@@ -132,3 +165,13 @@ bool ofxZmqSocket::getNextMessage(string &data)
 	
 	return true;
 }
+
+bool ofxZmqSocket::getNextMessage(ofBuffer &data)
+{
+	if ((items[0].revents & ZMQ_POLLIN) == false) return false;
+	
+	receive(data);
+	
+	return true;
+}
+

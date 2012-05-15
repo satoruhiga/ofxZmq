@@ -24,7 +24,17 @@ bool ofxZmqReply::send(const string &data, bool nonblocking, bool more)
 	return ofxZmqSocket::send((const void*)data.data(), data.size(), nonblocking, more);
 }
 
+bool ofxZmqReply::send(const ofBuffer &data, bool nonblocking, bool more)
+{
+	return ofxZmqSocket::send(data, nonblocking, more);
+}
+
 void ofxZmqReply::receive(string &data)
+{
+	ofxZmqSocket::receive(data);
+}
+
+void ofxZmqReply::receive(ofBuffer &data)
 {
 	ofxZmqSocket::receive(data);
 }
@@ -35,6 +45,11 @@ bool ofxZmqReply::hasWaitingMessage(long timeout_millis)
 }
 
 bool ofxZmqReply::getNextMessage(string &data)
+{
+	return ofxZmqSocket::getNextMessage(data);
+}
+
+bool ofxZmqReply::getNextMessage(ofBuffer &data)
 {
 	return ofxZmqSocket::getNextMessage(data);
 }
