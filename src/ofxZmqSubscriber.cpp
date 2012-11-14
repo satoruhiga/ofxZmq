@@ -10,14 +10,14 @@ void ofxZmqSubscriber::connect(string addr)
 	ofxZmqSocket::connect(addr);
 }
 
-void ofxZmqSubscriber::receive(string &data)
+bool ofxZmqSubscriber::receive(string &data)
 {
-	ofxZmqSocket::receive(data);
+	return ofxZmqSocket::receive(data);
 }
 
-void ofxZmqSubscriber::receive(ofBuffer &data)
+bool ofxZmqSubscriber::receive(ofBuffer &data)
 {
-	ofxZmqSocket::receive(data);
+	return ofxZmqSocket::receive(data);
 }
 
 bool ofxZmqSubscriber::hasWaitingMessage(long timeout_millis)

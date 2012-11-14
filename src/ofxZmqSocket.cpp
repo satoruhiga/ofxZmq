@@ -75,29 +75,27 @@ bool ofxZmqSocket::send(const ofBuffer &data, bool nonblocking, bool more)
 }
 
 
-void ofxZmqSocket::receive(string &data)
+bool ofxZmqSocket::receive(string &data)
 {
 	int32_t more;
 	size_t more_size = sizeof(more);
 	
 	data.clear();
 	
-	do
-	{
-		zmq::message_t m;
-		socket.recv(&m);
-		
-		socket.getsockopt(ZMQ_RCVMORE, &more, &more_size);
-		
-		const int numBytes = m.size();
-		const uint8_t *src = (uint8_t*)m.data();
-		
-		data.insert(data.end(), src, src + numBytes);
-	}
-	while (more);
+	zmq::message_t m;
+	socket.recv(&m);
+	
+	socket.getsockopt(ZMQ_RCVMORE, &more, &more_size);
+	
+	const int numBytes = m.size();
+	const uint8_t *src = (uint8_t*)m.data();
+	
+	data.insert(data.end(), src, src + numBytes);
+
+	return more;
 }
 
-void ofxZmqSocket::receive(ofBuffer &data)
+bool ofxZmqSocket::receive(ofBuffer &data)
 {
 	int32_t more = 0;
 	size_t more_size = sizeof(more);
@@ -106,21 +104,19 @@ void ofxZmqSocket::receive(ofBuffer &data)
 	
 	stringstream ss;
 	
-	do
-	{
-		zmq::message_t m;
-		socket.recv(&m);
-		
-		socket.getsockopt(ZMQ_RCVMORE, &more, &more_size);
-		
-		const int numBytes = m.size();
-		const char *src = (const char*)m.data();
-		
-		ss.write(src, numBytes);
-	}
-	while (more);
+	zmq::message_t m;
+	socket.recv(&m);
+	
+	socket.getsockopt(ZMQ_RCVMORE, &more, &more_size);
+	
+	const int numBytes = m.size();
+	const char *src = (const char*)m.data();
+	
+	ss.write(src, numBytes);
 	
 	data.set(ss);
+	
+	return more;
 }
 
 
@@ -161,18 +157,12 @@ bool ofxZmqSocket::hasWaitingMessage(long timeout_millis)
 bool ofxZmqSocket::getNextMessage(string &data)
 {
 	if ((items[0].revents & ZMQ_POLLIN) == false) return false;
-	
-	receive(data);
-	
-	return true;
+	return receive(data);
 }
 
 bool ofxZmqSocket::getNextMessage(ofBuffer &data)
 {
 	if ((items[0].revents & ZMQ_POLLIN) == false) return false;
-	
-	receive(data);
-	
-	return true;
+	return receive(data);
 }
 

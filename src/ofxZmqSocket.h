@@ -32,10 +32,12 @@ protected:
 	bool send(const string &data, bool nonblocking, bool more);
 	bool send(const ofBuffer &data, bool nonblocking, bool more);
 	
-	void receive(string &data);
-	void receive(ofBuffer &data);
+	bool receive(string &data);
+	bool receive(ofBuffer &data);
 
 	bool hasWaitingMessage(long timeout_millis = 0);
+	
+	// return true if has more flag
 	bool getNextMessage(string &data);
 	bool getNextMessage(ofBuffer &data);
 

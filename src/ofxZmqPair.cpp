@@ -34,12 +34,12 @@ bool ofxZmqPair::send(const ofBuffer &data, bool nonblocking, bool more)
 	return ofxZmqSocket::send(data, nonblocking, more);
 }
 
-void ofxZmqPair::receive(string &data)
+bool ofxZmqPair::receive(string &data)
 {
 	return ofxZmqSocket::receive(data);
 }
 
-void ofxZmqPair::receive(ofBuffer &data)
+bool ofxZmqPair::receive(ofBuffer &data)
 {
 	return ofxZmqSocket::receive(data);
 }

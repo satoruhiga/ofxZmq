@@ -17,8 +17,8 @@ public:
 	bool send(const string &data, bool nonblocking = false, bool more = false);
 	bool send(const ofBuffer &data, bool nonblocking = false, bool more = false);
 	
-	void receive(string &data);
-	void receive(ofBuffer &data);
+	bool receive(string &data);
+	bool receive(ofBuffer &data);
 
 	bool hasWaitingMessage(long timeout_millis = 0);
 	bool getNextMessage(string &data);

@@ -29,14 +29,14 @@ bool ofxZmqRequest::send(const ofBuffer &data, bool nonblocking, bool more)
 	return ofxZmqSocket::send(data, nonblocking, more);
 }
 
-void ofxZmqRequest::receive(string &data)
+bool ofxZmqRequest::receive(string &data)
 {
-	ofxZmqSocket::receive(data);
+	return ofxZmqSocket::receive(data);
 }
 
-void ofxZmqRequest::receive(ofBuffer &data)
+bool ofxZmqRequest::receive(ofBuffer &data)
 {
-	ofxZmqSocket::receive(data);
+	return ofxZmqSocket::receive(data);
 }
 
 bool ofxZmqRequest::hasWaitingMessage(long timeout_millis)

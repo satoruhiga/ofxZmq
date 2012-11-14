@@ -12,8 +12,8 @@ public:
 	void connect(string addr);
 	void setFilter(string filter);
 
-	void receive(string &data);
-	void receive(ofBuffer &data);
+	bool receive(string &data);
+	bool receive(ofBuffer &data);
 	
 	bool hasWaitingMessage(long timeout_millis = 0);
 	bool getNextMessage(string &data);
