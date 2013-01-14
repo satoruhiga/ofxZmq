@@ -49,8 +49,7 @@ bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool mor
 	
 	try
 	{
-		int rc = socket.send(m, flags);
-		return rc == 0;
+		return socket.send(m, flags);
 	}
 	catch (zmq::error_t &e)
 	{
