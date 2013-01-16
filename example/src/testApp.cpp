@@ -35,7 +35,10 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::keyPressed(int key)
 {
-	publisher.send("this is a test");
+	if (!publisher.send("this is a test"))
+	{
+		cout << "send failed" << endl;
+	}
 }
 
 //--------------------------------------------------------------
