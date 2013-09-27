@@ -20,14 +20,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#undef check
+
 #ifndef __ZMQ_TRIE_HPP_INCLUDED__
 #define __ZMQ_TRIE_HPP_INCLUDED__
 
 #include <stddef.h>
 
 #include "stdint.hpp"
-
-#undef check
 
 namespace zmq
 {

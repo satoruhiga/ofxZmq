@@ -47,6 +47,9 @@ zmq::xsub_t::~xsub_t ()
 
 void zmq::xsub_t::xattach_pipe (pipe_t *pipe_, bool icanhasall_)
 {
+    // icanhasall_ is unused
+    (void)icanhasall_;
+
     zmq_assert (pipe_);
     fq.attach (pipe_);
     dist.attach (pipe_);
@@ -92,8 +95,12 @@ int zmq::xsub_t::xsend (msg_t *msg_, int flags_)
 
     // Process the subscription.
     if (*data == 1) {
-        if (subscriptions.add (data + 1, size - 1))
-            return dist.send_to_all (msg_, flags_);
+	// this used to filter out duplicate subscriptions,
+	// however this is alread done on the XPUB side and
+	// doing it here as well breaks ZMQ_XPUB_VERBOSE
+	// when there are forwarding devices involved
+        subscriptions.add (data + 1, size - 1);
+        return dist.send_to_all (msg_, flags_);
     }
     else {
         if (subscriptions.rm (data + 1, size - 1))
@@ -116,6 +123,9 @@ bool zmq::xsub_t::xhas_out ()
 
 int zmq::xsub_t::xrecv (msg_t *msg_, int flags_)
 {
+    // flags_ is unused
+    (void)flags_;
+
     //  If there's already a message prepared by a previous call to zmq_poll,
     //  return it straight ahead.
     if (has_message) {

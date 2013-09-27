@@ -80,12 +80,19 @@ void zmq::dist_t::terminated (pipe_t *pipe_)
 {
     //  Remove the pipe from the list; adjust number of matching, active and/or
     //  eligible pipes accordingly.
-    if (pipes.index (pipe_) < matching)
+    if (pipes.index (pipe_) < matching) {
+        pipes.swap (pipes.index (pipe_), matching - 1);
         matching--;
-    if (pipes.index (pipe_) < active)
+    }
+    if (pipes.index (pipe_) < active) {
+        pipes.swap (pipes.index (pipe_), active - 1);
         active--;
-    if (pipes.index (pipe_) < eligible)
+    }
+    if (pipes.index (pipe_) < eligible) {
+        pipes.swap (pipes.index (pipe_), eligible - 1);
         eligible--;
+    }
+
     pipes.erase (pipe_);
 }
 
@@ -128,6 +135,9 @@ int zmq::dist_t::send_to_matching (msg_t *msg_, int flags_)
 
 void zmq::dist_t::distribute (msg_t *msg_, int flags_)
 {
+    // flags_ is unused
+    (void)flags_;
+
     //  If there are no matching pipes available, simply drop the message.
     if (matching == 0) {
         int rc = msg_->close ();

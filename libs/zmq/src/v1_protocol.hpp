@@ -1,6 +1,6 @@
 /*
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2012 iMatix Corporation
+    Copyright (c) 2007-2012 Other contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -18,28 +18,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ZMQ_FD_HPP_INCLUDED__
-#define __ZMQ_FD_HPP_INCLUDED__
-
-#include "platform.hpp"
-
-#ifdef ZMQ_HAVE_WINDOWS
-#include "windows.hpp"
-#endif
+#ifndef __ZMQ_V1_PROTOCOL_HPP_INCLUDED__
+#define __ZMQ_V1_PROTOCOL_HPP_INCLUDED__
 
 namespace zmq
 {
-#ifdef ZMQ_HAVE_WINDOWS
-#if defined _MSC_VER &&_MSC_VER <= 1400
-    typedef UINT_PTR fd_t;
-    enum {retired_fd = (fd_t)(~0)};
-#else
-    typedef SOCKET fd_t;
-    enum {retired_fd = (fd_t)INVALID_SOCKET};
-#endif
-#else
-    typedef int fd_t;
-    enum {retired_fd = -1};
-#endif
+
+    //  Definition of constans for v1 transport protocol.
+    class v1_protocol_t
+    {
+    public:
+        //  Message flags.
+        enum
+        {
+            more_flag = 1,
+            large_flag = 2
+        };
+
+    };
+
 }
+
 #endif
+

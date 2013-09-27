@@ -1,6 +1,6 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
     Copyright (c) 2009-2011 250bpm s.r.o.
+    Copyright (c) 2007-2012 iMatix Corporation
     Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
@@ -19,39 +19,40 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "pub.hpp"
+#ifndef __ZMQ_V1_ENCODER_HPP_INCLUDED__
+#define __ZMQ_V1_ENCODER_HPP_INCLUDED__
+
 #include "msg.hpp"
+#include "i_msg_source.hpp"
+#include "encoder.hpp"
 
-zmq::pub_t::pub_t (class ctx_t *parent_, uint32_t tid_, int sid_) :
-    xpub_t (parent_, tid_, sid_)
+namespace zmq
 {
-    options.type = ZMQ_PUB;
+
+    //  Encoder for 0MQ framing protocol. Converts messages into data stream.
+
+    class v1_encoder_t : public encoder_base_t <v1_encoder_t>
+    {
+    public:
+
+        v1_encoder_t (size_t bufsize_, i_msg_source *msg_source_);
+        virtual ~v1_encoder_t ();
+
+        virtual void set_msg_source (i_msg_source *msg_source_);
+
+    private:
+
+        bool size_ready ();
+        bool message_ready ();
+
+        i_msg_source *msg_source;
+        msg_t in_progress;
+        unsigned char tmpbuf [9];
+
+        v1_encoder_t (const v1_encoder_t&);
+        const v1_encoder_t &operator = (const v1_encoder_t&);
+    };
 }
 
-zmq::pub_t::~pub_t ()
-{
-}
-
-int zmq::pub_t::xrecv (class msg_t *, int)
-{
-    //  Messages cannot be received from PUB socket.
-    errno = ENOTSUP;
-    return -1;
-}
-
-bool zmq::pub_t::xhas_in ()
-{
-    return false;
-}
-
-zmq::pub_session_t::pub_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    xpub_session_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::pub_session_t::~pub_session_t ()
-{
-}
+#endif
 

@@ -1,4 +1,5 @@
 /*
+    Copyright (c) 2010-2011 250bpm s.r.o.
     Copyright (c) 2007-2009 iMatix Corporation
     Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
 
@@ -18,28 +19,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ZMQ_FD_HPP_INCLUDED__
-#define __ZMQ_FD_HPP_INCLUDED__
+#ifndef __ZMQ_TCP_HPP_INCLUDED__
+#define __ZMQ_TCP_HPP_INCLUDED__
 
-#include "platform.hpp"
-
-#ifdef ZMQ_HAVE_WINDOWS
-#include "windows.hpp"
-#endif
+#include "fd.hpp"
 
 namespace zmq
 {
-#ifdef ZMQ_HAVE_WINDOWS
-#if defined _MSC_VER &&_MSC_VER <= 1400
-    typedef UINT_PTR fd_t;
-    enum {retired_fd = (fd_t)(~0)};
-#else
-    typedef SOCKET fd_t;
-    enum {retired_fd = (fd_t)INVALID_SOCKET};
-#endif
-#else
-    typedef int fd_t;
-    enum {retired_fd = -1};
-#endif
+
+    //  Tunes the supplied TCP socket for the best latency.
+    void tune_tcp_socket (fd_t s_);
+
+    //  Tunes TCP keep-alives
+    void tune_tcp_keepalives (fd_t s_, int keepalive_, int keepalive_cnt_, int keepalive_idle_, int keepalive_intvl_);
+
 }
-#endif
+
+#endif 

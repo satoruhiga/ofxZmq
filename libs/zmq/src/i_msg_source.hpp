@@ -1,6 +1,6 @@
 /*
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2012 iMatix Corporation
+    Copyright (c) 2007-2012 Other contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -18,28 +18,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ZMQ_FD_HPP_INCLUDED__
-#define __ZMQ_FD_HPP_INCLUDED__
-
-#include "platform.hpp"
-
-#ifdef ZMQ_HAVE_WINDOWS
-#include "windows.hpp"
-#endif
+#ifndef __ZMQ_I_MSG_SOURCE_HPP_INCLUDED__
+#define __ZMQ_I_MSG_SOURCE_HPP_INCLUDED__
 
 namespace zmq
 {
-#ifdef ZMQ_HAVE_WINDOWS
-#if defined _MSC_VER &&_MSC_VER <= 1400
-    typedef UINT_PTR fd_t;
-    enum {retired_fd = (fd_t)(~0)};
-#else
-    typedef SOCKET fd_t;
-    enum {retired_fd = (fd_t)INVALID_SOCKET};
-#endif
-#else
-    typedef int fd_t;
-    enum {retired_fd = -1};
-#endif
+
+    //  Forward declaration
+    class msg_t;
+
+    //  Interface to be implemented by message source.
+
+    struct i_msg_source
+    {
+        virtual ~i_msg_source () {}
+
+        //  Fetch a message. Returns 0 if successful; -1 otherwise.
+        //  The caller is responsible for freeing the message when no
+        //  longer used.
+        virtual int pull_msg (msg_t *msg_) = 0;
+    };
+
 }
+
 #endif

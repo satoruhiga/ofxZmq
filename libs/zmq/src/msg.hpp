@@ -29,8 +29,6 @@
 #include "config.hpp"
 #include "atomic_counter.hpp"
 
-#undef check
-
 //  Signature for free function to deallocate the message content.
 //  Note that it has to be declared as "C" so that it is the same as
 //  zmq_free_fn defined in zmq.h.
@@ -71,6 +69,7 @@ namespace zmq
         unsigned char flags ();
         void set_flags (unsigned char flags_);
         void reset_flags (unsigned char flags_);
+        bool is_identity () const;
         bool is_delimiter ();
         bool is_vsm ();
 
