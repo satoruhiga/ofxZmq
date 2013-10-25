@@ -14,8 +14,14 @@ public:
 	void setIdentity(string data);
 	string getIdentity();
 
+
 	void setHighWaterMark(long maxQueueSize);
+	void setSendHighWaterMark(long maxQueueSize);
+	void setReceiveHighWaterMark(long maxQueueSize);
+
 	long getHighWaterMark();
+	long getSendHighWaterMark();
+	long getReceiveHighWaterMark();
 
 protected:
 

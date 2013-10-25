@@ -134,17 +134,42 @@ string ofxZmqSocket::getIdentity()
 
 void ofxZmqSocket::setHighWaterMark(long maxQueueSize)
 {
+	setReceiveHighWaterMark(maxQueueSize);
+	setSendHighWaterMark(maxQueueSize);
+}
+
+void ofxZmqSocket::setSendHighWaterMark(long maxQueueSize)
+{
 	int32_t v = maxQueueSize;
 	size_t size = sizeof(v);
 	socket.setsockopt(ZMQ_SNDHWM, &v, size);
+}
+
+void ofxZmqSocket::setReceiveHighWaterMark(long maxQueueSize)
+{
+	int32_t v = maxQueueSize;
+	size_t size = sizeof(v);
 	socket.setsockopt(ZMQ_RCVHWM, &v, size);
 }
 
 long ofxZmqSocket::getHighWaterMark()
 {
+	return getSendHighWaterMark();
+}
+
+long ofxZmqSocket::getSendHighWaterMark()
+{
 	int32_t v;
 	size_t size = sizeof(v);
 	socket.getsockopt(ZMQ_SNDHWM, &v, &size);
+	return v;
+}
+
+long ofxZmqSocket::getReceiveHighWaterMark()
+{
+	int32_t v;
+	size_t size = sizeof(v);
+	socket.getsockopt(ZMQ_RCVHWM, &v, &size);
 	return v;
 }
 
