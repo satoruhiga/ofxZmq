@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2010-2011 Miru Limited
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -32,6 +29,7 @@
 
 #include "pgm_receiver.hpp"
 #include "session_base.hpp"
+#include "v1_decoder.hpp"
 #include "stdint.hpp"
 #include "wire.hpp"
 #include "err.hpp"
@@ -43,8 +41,8 @@ zmq::pgm_receiver_t::pgm_receiver_t (class io_thread_t *parent_,
     pgm_socket (true, options_),
     options (options_),
     session (NULL),
-    mru_decoder (NULL),
-    pending_bytes (0)
+    active_tsi (NULL),
+    insize (0)
 {
 }
 
@@ -85,9 +83,7 @@ void zmq::pgm_receiver_t::unplug ()
             delete it->second.decoder;
     }
     peers.clear ();
-
-    mru_decoder = NULL;
-    pending_bytes = 0;
+    active_tsi = NULL;
 
     if (has_rx_timer) {
         cancel_timer (rx_timer_id);
@@ -106,55 +102,53 @@ void zmq::pgm_receiver_t::terminate ()
     delete this;
 }
 
-void zmq::pgm_receiver_t::activate_out ()
+void zmq::pgm_receiver_t::restart_output ()
 {
     drop_subscriptions ();
 }
 
-void zmq::pgm_receiver_t::activate_in ()
+void zmq::pgm_receiver_t::restart_input ()
 {
-    //  It is possible that the most recently used decoder
-    //  processed the whole buffer but failed to write
-    //  the last message into the pipe.
-    if (pending_bytes == 0) {
-        if (mru_decoder != NULL) {
-            mru_decoder->process_buffer (NULL, 0);
-            session->flush ();
+    zmq_assert (session != NULL);
+    zmq_assert (active_tsi != NULL);
+
+    const peers_t::iterator it = peers.find (*active_tsi);
+    zmq_assert (it != peers.end ());
+    zmq_assert (it->second.joined);
+
+    //  Push the pending message into the session.
+    int rc = session->push_msg (it->second.decoder->msg ());
+    errno_assert (rc == 0);
+
+    if (insize > 0) {
+        rc = process_input (it->second.decoder);
+        if (rc == -1) {
+            //  HWM reached; we will try later.
+            if (errno == EAGAIN) {
+                session->flush ();
+                return;
+            }
+            //  Data error. Delete message decoder, mark the
+            //  peer as not joined and drop remaining data.
+            it->second.joined = false;
+            delete it->second.decoder;
+            it->second.decoder = NULL;
+            insize = 0;
         }
-
-        //  Resume polling.
-        set_pollin (pipe_handle);
-        set_pollin (socket_handle);
-
-        return;
     }
-
-    zmq_assert (mru_decoder != NULL);
-    zmq_assert (pending_ptr != NULL);
-
-    //  Ask the decoder to process remaining data.
-    size_t n = mru_decoder->process_buffer (pending_ptr, pending_bytes);
-    pending_bytes -= n;
-    session->flush ();
-
-    if (pending_bytes > 0)
-        return;
 
     //  Resume polling.
     set_pollin (pipe_handle);
     set_pollin (socket_handle);
 
+    active_tsi = NULL;
     in_event ();
 }
 
 void zmq::pgm_receiver_t::in_event ()
 {
     // Read data from the underlying pgm_socket.
-    unsigned char *data = NULL;
     const pgm_tsi_t *tsi = NULL;
-
-    if (pending_bytes > 0)
-        return;
 
     if (has_rx_timer) {
         cancel_timer (rx_timer_id);
@@ -169,7 +163,7 @@ void zmq::pgm_receiver_t::in_event ()
         //  Note the workaround made not to break strict-aliasing rules.
         void *tmp = NULL;
         ssize_t received = pgm_socket.receive (&tmp, &tsi);
-        data = (unsigned char*) tmp;
+        inpos = (unsigned char*) tmp;
 
         //  No data to process. This may happen if the packet received is
         //  neither ODATA nor ODATA.
@@ -189,8 +183,6 @@ void zmq::pgm_receiver_t::in_event ()
         if (received == -1) {
             if (it != peers.end ()) {
                 it->second.joined = false;
-                if (it->second.decoder == mru_decoder)
-                    mru_decoder = NULL;
                 if (it->second.decoder != NULL) {
                     delete it->second.decoder;
                     it->second.decoder = NULL;
@@ -205,11 +197,13 @@ void zmq::pgm_receiver_t::in_event ()
             it = peers.insert (peers_t::value_type (*tsi, peer_info)).first;
         }
 
+        insize = static_cast <size_t> (received);
+
         //  Read the offset of the fist message in the current packet.
-        zmq_assert ((size_t) received >= sizeof (uint16_t));
-        uint16_t offset = get_uint16 (data);
-        data += sizeof (uint16_t);
-        received -= sizeof (uint16_t);
+        zmq_assert (insize >= sizeof (uint16_t));
+        uint16_t offset = get_uint16 (inpos);
+        inpos += sizeof (uint16_t);
+        insize -= sizeof (uint16_t);
 
         //  Join the stream if needed.
         if (!it->second.joined) {
@@ -219,48 +213,67 @@ void zmq::pgm_receiver_t::in_event ()
             if (offset == 0xffff)
                 continue;
 
-            zmq_assert (offset <= received);
+            zmq_assert (offset <= insize);
             zmq_assert (it->second.decoder == NULL);
 
             //  We have to move data to the begining of the first message.
-            data += offset;
-            received -= offset;
+            inpos += offset;
+            insize -= offset;
 
             //  Mark the stream as joined.
             it->second.joined = true;
 
             //  Create and connect decoder for the peer.
-            it->second.decoder = new (std::nothrow) decoder_t (0,
-                options.maxmsgsize);
+            it->second.decoder = new (std::nothrow)
+                v1_decoder_t (0, options.maxmsgsize);
             alloc_assert (it->second.decoder);
-            it->second.decoder->set_msg_sink (session);
         }
 
-        mru_decoder = it->second.decoder;
+        int rc = process_input (it->second.decoder);
+        if (rc == -1) {
+            if (errno == EAGAIN) {
+                active_tsi = tsi;
 
-        //  Push all the data to the decoder.
-        ssize_t processed = it->second.decoder->process_buffer (data, received);
-        if (processed < received) {
-            //  Save some state so we can resume the decoding process later.
-            pending_bytes = received - processed;
-            pending_ptr = data + processed;
-            //  Stop polling.
-            reset_pollin (pipe_handle);
-            reset_pollin (socket_handle);
+                //  Stop polling.
+                reset_pollin (pipe_handle);
+                reset_pollin (socket_handle);
 
-            //  Reset outstanding timer.
-            if (has_rx_timer) {
-                cancel_timer (rx_timer_id);
-                has_rx_timer = false;
+                break;
             }
 
-            break;
+            it->second.joined = false;
+            delete it->second.decoder;
+            it->second.decoder = NULL;
+            insize = 0;
         }
     }
 
     //  Flush any messages decoder may have produced.
     session->flush ();
 }
+
+int zmq::pgm_receiver_t::process_input (v1_decoder_t *decoder)
+{
+    zmq_assert (session != NULL);
+
+    while (insize > 0) {
+        size_t n = 0;
+        int rc = decoder->decode (inpos, insize, n);
+        if (rc == -1)
+            return -1;
+        inpos += n;
+        insize -= n;
+        if (rc == 0)
+            break;
+        rc = session->push_msg (decoder->msg ());
+        if (rc == -1) {
+            errno_assert (errno == EAGAIN);
+            return -1;
+        }
+    }
+    return 0;
+}
+
 
 void zmq::pgm_receiver_t::timer_event (int token)
 {

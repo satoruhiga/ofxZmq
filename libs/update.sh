@@ -4,7 +4,7 @@ if [ ! -d zmq ]; then
 	mkdir zmq
 fi
 
-ZMQ=zeromq-3.2.4
+ZMQ=zeromq-4.0.4
 ZMQ_DIR=$(cd $(dirname .) && pwd)/zmq
 
 mkdir temp

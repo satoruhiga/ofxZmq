@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2010-2011 Miru Limited
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -239,7 +236,8 @@ int zmq::pgm_socket_t::init (bool udp_encapsulation_, const char *network_)
             !pgm_setsockopt (sock, IPPROTO_PGM, PGM_NAK_NCF_RETRIES,
                 &nak_ncf_retries, sizeof (nak_ncf_retries)))
             goto err_abort;
-    } else {
+    }
+    else {
         const int send_only        = 1,
                   max_rte      = (int) ((options.rate * 1000) / 8),
                   txw_max_tpdu     = (int) pgm_max_tpdu,
@@ -342,7 +340,7 @@ int zmq::pgm_socket_t::init (bool udp_encapsulation_, const char *network_)
 		const int dscp = 0x2e << 2;
 		if (AF_INET6 != sa_family)
 		    pgm_setsockopt (sock, IPPROTO_PGM, PGM_TOS,
-			&dscp, sizeof (dscp));
+		       &dscp, sizeof (dscp));
 
 		const int nonblocking = 1;
 		if (!pgm_setsockopt (sock, IPPROTO_PGM, PGM_NOBLOCK,
@@ -474,7 +472,8 @@ size_t zmq::pgm_socket_t::send (unsigned char *data_, size_t data_len_)
     if (nbytes > 0) {
         zmq_assert (status == PGM_IO_STATUS_NORMAL);
         zmq_assert (nbytes == data_len_);
-    } else {
+    }
+    else {
         zmq_assert (status == PGM_IO_STATUS_RATE_LIMITED ||
             status == PGM_IO_STATUS_WOULD_BLOCK);
 
@@ -678,7 +677,8 @@ void zmq::pgm_socket_t::process_upstream ()
 
     if (status == PGM_IO_STATUS_TIMER_PENDING)
         errno = EBUSY;
-    else if (status == PGM_IO_STATUS_RATE_LIMITED)
+    else
+    if (status == PGM_IO_STATUS_RATE_LIMITED)
         errno = ENOMEM;
     else
         errno = EAGAIN;

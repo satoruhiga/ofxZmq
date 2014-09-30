@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -40,8 +38,8 @@ namespace zmq
         ~rep_t ();
 
         //  Overloads of functions from socket_base_t.
-        int xsend (zmq::msg_t *msg_, int flags_);
-        int xrecv (zmq::msg_t *msg_, int flags_);
+        int xsend (zmq::msg_t *msg_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         bool xhas_out ();
 
@@ -58,21 +56,6 @@ namespace zmq
         rep_t (const rep_t&);
         const rep_t &operator = (const rep_t&);
 
-    };
-
-    class rep_session_t : public router_session_t
-    {
-    public:
-
-        rep_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            zmq::socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~rep_session_t ();
-
-    private:
-
-        rep_session_t (const rep_session_t&);
-        const rep_session_t &operator = (const rep_session_t&);
     };
 
 }

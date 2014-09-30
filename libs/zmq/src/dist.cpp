@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2011 250bpm s.r.o.
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -76,7 +74,7 @@ void zmq::dist_t::unmatch ()
     matching = 0;
 }
 
-void zmq::dist_t::terminated (pipe_t *pipe_)
+void zmq::dist_t::pipe_terminated (pipe_t *pipe_)
 {
     //  Remove the pipe from the list; adjust number of matching, active and/or
     //  eligible pipes accordingly.
@@ -110,19 +108,19 @@ void zmq::dist_t::activated (pipe_t *pipe_)
     }
 }
 
-int zmq::dist_t::send_to_all (msg_t *msg_, int flags_)
+int zmq::dist_t::send_to_all (msg_t *msg_)
 {
     matching = active;
-    return send_to_matching (msg_, flags_);
+    return send_to_matching (msg_);
 }
 
-int zmq::dist_t::send_to_matching (msg_t *msg_, int flags_)
+int zmq::dist_t::send_to_matching (msg_t *msg_)
 {
     //  Is this end of a multipart message?
     bool msg_more = msg_->flags () & msg_t::more ? true : false;
 
     //  Push the message to matching pipes.
-    distribute (msg_, flags_);
+    distribute (msg_);
 
     //  If mutlipart message is fully sent, activate all the eligible pipes.
     if (!msg_more)
@@ -133,11 +131,8 @@ int zmq::dist_t::send_to_matching (msg_t *msg_, int flags_)
     return 0;
 }
 
-void zmq::dist_t::distribute (msg_t *msg_, int flags_)
+void zmq::dist_t::distribute (msg_t *msg_)
 {
-    // flags_ is unused
-    (void)flags_;
-
     //  If there are no matching pipes available, simply drop the message.
     if (matching == 0) {
         int rc = msg_->close ();

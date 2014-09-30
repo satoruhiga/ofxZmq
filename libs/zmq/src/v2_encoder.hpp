@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2007-2012 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -18,26 +17,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __ZMQ_I_MSG_SINK_HPP_INCLUDED__
-#define __ZMQ_I_MSG_SINK_HPP_INCLUDED__
+#ifndef __ZMQ_V2_ENCODER_HPP_INCLUDED__
+#define __ZMQ_V2_ENCODER_HPP_INCLUDED__
+
+#include "encoder.hpp"
 
 namespace zmq
 {
+    //  Encoder for 0MQ framing protocol. Converts messages into data stream.
 
-    //  Forward declaration
-    class msg_t;
-
-    //  Interface to be implemented by message sink.
-
-    struct i_msg_sink
+    class v2_encoder_t : public encoder_base_t <v2_encoder_t>
     {
-        virtual ~i_msg_sink () {}
+    public:
 
-        //  Delivers a message. Returns 0 if successful; -1 otherwise.
-        //  The function takes ownership of the passed message.
-        virtual int push_msg (msg_t *msg_) = 0;
+        v2_encoder_t (size_t bufsize_);
+        virtual ~v2_encoder_t ();
+
+    private:
+
+        void size_ready ();
+        void message_ready ();
+
+        unsigned char tmpbuf [9];
+
+        v2_encoder_t (const v2_encoder_t&);
+        const v2_encoder_t &operator = (const v2_encoder_t&);
     };
-
 }
 
 #endif
+

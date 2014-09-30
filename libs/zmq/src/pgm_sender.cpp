@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2010-2011 Miru Limited
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -42,13 +39,17 @@ zmq::pgm_sender_t::pgm_sender_t (io_thread_t *parent_,
     io_object_t (parent_),
     has_tx_timer (false),
     has_rx_timer (false),
+    session (NULL),
     encoder (0),
+    more_flag (false),
     pgm_socket (false, options_),
     options (options_),
     out_buffer (NULL),
     out_buffer_size (0),
     write_size (0)
 {
+    int rc = msg.init ();
+    errno_assert (rc == 0);
 }
 
 int zmq::pgm_sender_t::init (bool udp_encapsulation_, const char *network_)
@@ -72,7 +73,7 @@ void zmq::pgm_sender_t::plug (io_thread_t *io_thread_, session_base_t *session_)
     fd_t rdata_notify_fd = retired_fd;
     fd_t pending_notify_fd = retired_fd;
 
-    encoder.set_msg_source (session_);
+    session = session_;
 
     //  Fill fds from PGM transport and add them to the poller.
     pgm_socket.get_sender_fds (&downlink_socket_fd, &uplink_socket_fd,
@@ -109,7 +110,7 @@ void zmq::pgm_sender_t::unplug ()
     rm_fd (uplink_handle);
     rm_fd (rdata_notify_handle);
     rm_fd (pending_notify_handle);
-    encoder.set_msg_source (NULL);
+    session = NULL;
 }
 
 void zmq::pgm_sender_t::terminate ()
@@ -118,19 +119,22 @@ void zmq::pgm_sender_t::terminate ()
     delete this;
 }
 
-void zmq::pgm_sender_t::activate_out ()
+void zmq::pgm_sender_t::restart_output ()
 {
     set_pollout (handle);
     out_event ();
 }
 
-void zmq::pgm_sender_t::activate_in ()
+void zmq::pgm_sender_t::restart_input ()
 {
     zmq_assert (false);
 }
 
 zmq::pgm_sender_t::~pgm_sender_t ()
 {
+    int rc = msg.close ();
+    errno_assert (rc == 0);
+
     if (out_buffer) {
         free (out_buffer);
         out_buffer = NULL;
@@ -164,18 +168,31 @@ void zmq::pgm_sender_t::out_event ()
         //  the get data function we prevent it from returning its own buffer.
         unsigned char *bf = out_buffer + sizeof (uint16_t);
         size_t bfsz = out_buffer_size - sizeof (uint16_t);
-        int offset = -1;
-        encoder.get_data (&bf, &bfsz, &offset);
+        uint16_t offset = 0xffff;
+
+        size_t bytes = encoder.encode (&bf, bfsz);
+        while (bytes < bfsz) {
+            if (!more_flag && offset == 0xffff)
+                offset = static_cast <uint16_t> (bytes);
+            int rc = session->pull_msg (&msg);
+            if (rc == -1)
+                break;
+            more_flag = msg.flags () & msg_t::more;
+            encoder.load_msg (&msg);
+            bf = out_buffer + sizeof (uint16_t) + bytes;
+            bytes += encoder.encode (&bf, bfsz - bytes);
+        }
 
         //  If there are no data to write stop polling for output.
-        if (!bfsz) {
+        if (bytes == 0) {
             reset_pollout (handle);
             return;
         }
 
+        write_size = sizeof (uint16_t) + bytes;
+
         //  Put offset information in the buffer.
-        write_size = bfsz + sizeof (uint16_t);
-        put_uint16 (out_buffer, offset == -1 ? 0xffff : (uint16_t) offset);
+        put_uint16 (out_buffer, offset);
     }
 
     if (has_tx_timer) {
@@ -187,16 +204,17 @@ void zmq::pgm_sender_t::out_event ()
     size_t nbytes = pgm_socket.send (out_buffer, write_size);
 
     //  We can write either all data or 0 which means rate limit reached.
-    if (nbytes == write_size) {
+    if (nbytes == write_size)
         write_size = 0;
-    } else {
+    else {
         zmq_assert (nbytes == 0);
 
         if (errno == ENOMEM) {
             const long timeout = pgm_socket.get_tx_timeout ();
             add_timer (timeout, tx_timer_id);
             has_tx_timer = true;
-        } else
+        }
+        else
             errno_assert (errno == EBUSY);
     }
 }
@@ -207,10 +225,13 @@ void zmq::pgm_sender_t::timer_event (int token)
     if (token == rx_timer_id) {
         has_rx_timer = false;
         in_event ();
-    } else if (token == tx_timer_id) {
+    }
+    else
+    if (token == tx_timer_id) {
         has_tx_timer = false;
         out_event ();
-    } else
+    }
+    else
         zmq_assert (false);
 }
 

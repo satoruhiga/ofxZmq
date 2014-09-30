@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2010 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -34,10 +32,10 @@ zmq::push_t::~push_t ()
 {
 }
 
-void zmq::push_t::xattach_pipe (pipe_t *pipe_, bool icanhasall_)
+void zmq::push_t::xattach_pipe (pipe_t *pipe_, bool subscribe_to_all_)
 {
-    // icanhasall_ is unused
-    (void)icanhasall_;
+    // subscribe_to_all_ is unused
+    (void)subscribe_to_all_;
 
     zmq_assert (pipe_);
     lb.attach (pipe_);
@@ -48,29 +46,17 @@ void zmq::push_t::xwrite_activated (pipe_t *pipe_)
     lb.activated (pipe_);
 }
 
-void zmq::push_t::xterminated (pipe_t *pipe_)
+void zmq::push_t::xpipe_terminated (pipe_t *pipe_)
 {
-    lb.terminated (pipe_);
+    lb.pipe_terminated (pipe_);
 }
 
-int zmq::push_t::xsend (msg_t *msg_, int flags_)
+int zmq::push_t::xsend (msg_t *msg_)
 {
-    return lb.send (msg_, flags_);
+    return lb.send (msg_);
 }
 
 bool zmq::push_t::xhas_out ()
 {
     return lb.has_out ();
 }
-
-zmq::push_session_t::push_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    session_base_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::push_session_t::~push_session_t ()
-{
-}
-

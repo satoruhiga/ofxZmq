@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -29,6 +27,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <netdb.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #endif
@@ -73,11 +72,11 @@ zmq::fd_t zmq::open_socket (int domain_, int type_, int protocol_)
 
 void zmq::unblock_socket (fd_t s_)
 {
-#ifdef ZMQ_HAVE_WINDOWS
+#if defined ZMQ_HAVE_WINDOWS
     u_long nonblock = 1;
     int rc = ioctlsocket (s_, FIONBIO, &nonblock);
     wsa_assert (rc != SOCKET_ERROR);
-#elif ZMQ_HAVE_OPENVMS
+#elif defined ZMQ_HAVE_OPENVMS
     int nonblock = 1;
     int rc = ioctl (s_, FIONBIO, &nonblock);
     errno_assert (rc != -1);
@@ -92,6 +91,8 @@ void zmq::unblock_socket (fd_t s_)
 
 void zmq::enable_ipv4_mapping (fd_t s_)
 {
+  (void) s_;
+
 #ifdef IPV6_V6ONLY
 #ifdef ZMQ_HAVE_WINDOWS
     DWORD flag = 0;
@@ -106,4 +107,43 @@ void zmq::enable_ipv4_mapping (fd_t s_)
     errno_assert (rc == 0);
 #endif
 #endif
+}
+
+bool zmq::get_peer_ip_address (fd_t sockfd_, std::string &ip_addr_)
+{
+    int rc;
+    struct sockaddr_storage ss;
+
+#if defined ZMQ_HAVE_HPUX || defined ZMQ_HAVE_WINDOWS
+    int addrlen = static_cast <int> (sizeof ss);
+#else
+    socklen_t addrlen = sizeof ss;
+#endif
+    rc = getpeername (sockfd_, (struct sockaddr*) &ss, &addrlen);
+#ifdef ZMQ_HAVE_WINDOWS
+    if (rc == SOCKET_ERROR) {
+        wsa_assert (WSAGetLastError () != WSANOTINITIALISED &&
+                    WSAGetLastError () != WSAEFAULT &&
+                    WSAGetLastError () != WSAEINPROGRESS &&
+                    WSAGetLastError () != WSAENOTSOCK);
+        return false;
+    }
+#else
+    if (rc == -1) {
+        errno_assert (errno != EBADF &&
+                      errno != EFAULT &&
+                      errno != EINVAL &&
+                      errno != ENOTSOCK);
+        return false;
+    }
+#endif
+
+    char host [NI_MAXHOST];
+    rc = getnameinfo ((struct sockaddr*) &ss, addrlen, host, sizeof host,
+        NULL, 0, NI_NUMERICHOST);
+    if (rc != 0)
+        return false;
+
+    ip_addr_ = host;
+    return true;
 }

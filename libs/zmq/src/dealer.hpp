@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -46,14 +45,19 @@ namespace zmq
     protected:
 
         //  Overloads of functions from socket_base_t.
-        void xattach_pipe (zmq::pipe_t *pipe_, bool icanhasall_);
-        int xsend (zmq::msg_t *msg_, int flags_);
-        int xrecv (zmq::msg_t *msg_, int flags_);
+        void xattach_pipe (zmq::pipe_t *pipe_, bool subscribe_to_all_);
+        int xsetsockopt (int option_, const void *optval_, size_t optvallen_);
+        int xsend (zmq::msg_t *msg_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         bool xhas_out ();
         void xread_activated (zmq::pipe_t *pipe_);
         void xwrite_activated (zmq::pipe_t *pipe_);
-        void xterminated (zmq::pipe_t *pipe_);
+        void xpipe_terminated (zmq::pipe_t *pipe_);
+
+        //  Send and recv - knowing which pipe was used.
+        int sendpipe (zmq::msg_t *msg_, zmq::pipe_t **pipe_);
+        int recvpipe (zmq::msg_t *msg_, zmq::pipe_t **pipe_);
 
     private:
 
@@ -62,29 +66,11 @@ namespace zmq
         fq_t fq;
         lb_t lb;
 
-        //  Have we prefetched a message.
-        bool prefetched;
-
-        //  Holds the prefetched message.
-        msg_t prefetched_msg;
+        // if true, send an empty message to every connected router peer
+        bool probe_router;
 
         dealer_t (const dealer_t&);
         const dealer_t &operator = (const dealer_t&);
-    };
-
-    class dealer_session_t : public session_base_t
-    {
-    public:
-
-        dealer_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            zmq::socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~dealer_session_t ();
-
-    private:
-
-        dealer_session_t (const dealer_session_t&);
-        const dealer_session_t &operator = (const dealer_session_t&);
     };
 
 }

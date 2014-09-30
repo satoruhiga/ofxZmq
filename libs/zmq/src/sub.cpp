@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -51,13 +49,14 @@ int zmq::sub_t::xsetsockopt (int option_, const void *optval_,
     unsigned char *data = (unsigned char*) msg.data ();
     if (option_ == ZMQ_SUBSCRIBE)
         *data = 1;
-    else if (option_ == ZMQ_UNSUBSCRIBE)
+    else
+    if (option_ == ZMQ_UNSUBSCRIBE)
         *data = 0;
     memcpy (data + 1, optval_, optvallen_);
 
     //  Pass it further on in the stack.
     int err = 0;
-    rc = xsub_t::xsend (&msg, 0);
+    rc = xsub_t::xsend (&msg);
     if (rc != 0)
         err = errno;
     int rc2 = msg.close ();
@@ -67,7 +66,7 @@ int zmq::sub_t::xsetsockopt (int option_, const void *optval_,
     return rc;
 }
 
-int zmq::sub_t::xsend (msg_t *, int)
+int zmq::sub_t::xsend (msg_t *)
 {
     //  Overload the XSUB's send.
     errno = ENOTSUP;
@@ -79,15 +78,3 @@ bool zmq::sub_t::xhas_out ()
     //  Overload the XSUB's send.
     return false;
 }
-
-zmq::sub_session_t::sub_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    xsub_session_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::sub_session_t::~sub_session_t ()
-{
-}
-

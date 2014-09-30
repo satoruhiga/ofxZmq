@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -25,6 +23,7 @@
 #include "atomic_ptr.hpp"
 #include "yqueue.hpp"
 #include "platform.hpp"
+#include "ypipe_base.hpp"
 
 namespace zmq
 {
@@ -36,7 +35,7 @@ namespace zmq
     //  N is granularity of the pipe, i.e. how many items are needed to
     //  perform next memory allocation.
 
-    template <typename T, int N> class ypipe_t
+    template <typename T, int N> class ypipe_t : public ypipe_base_t<T,N>
     {
     public:
 

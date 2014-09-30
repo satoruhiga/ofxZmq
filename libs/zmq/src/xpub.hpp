@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2010-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -47,15 +46,15 @@ namespace zmq
         ~xpub_t ();
 
         //  Implementations of virtual functions from socket_base_t.
-        void xattach_pipe (zmq::pipe_t *pipe_, bool icanhasall_ = false);
-        int xsend (zmq::msg_t *msg_, int flags_);
+        void xattach_pipe (zmq::pipe_t *pipe_, bool subscribe_to_all_ = false);
+        int xsend (zmq::msg_t *msg_);
         bool xhas_out ();
-        int xrecv (zmq::msg_t *msg_, int flags_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         void xread_activated (zmq::pipe_t *pipe_);
         void xwrite_activated (zmq::pipe_t *pipe_);
         int xsetsockopt (int option_, const void *optval_, size_t optvallen_);
-        void xterminated (zmq::pipe_t *pipe_);
+        void xpipe_terminated (zmq::pipe_t *pipe_);
 
     private:
 
@@ -83,26 +82,11 @@ namespace zmq
         //  List of pending (un)subscriptions, ie. those that were already
         //  applied to the trie, but not yet received by the user.
         typedef std::basic_string <unsigned char> blob_t;
-        typedef std::deque <blob_t> pending_t;
-        pending_t pending;
+        std::deque <blob_t> pending_data;
+        std::deque <unsigned char> pending_flags;
 
         xpub_t (const xpub_t&);
         const xpub_t &operator = (const xpub_t&);
-    };
-
-    class xpub_session_t : public session_base_t
-    {
-    public:
-
-        xpub_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~xpub_session_t ();
-
-    private:
-
-        xpub_session_t (const xpub_session_t&);
-        const xpub_session_t &operator = (const xpub_session_t&);
     };
 
 }

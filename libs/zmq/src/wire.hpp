@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -34,7 +33,7 @@ namespace zmq
         *buffer_ = value;
     }
 
-    inline uint8_t get_uint8 (unsigned char *buffer_)
+    inline uint8_t get_uint8 (const unsigned char *buffer_)
     {
         return *buffer_;
     }
@@ -45,7 +44,7 @@ namespace zmq
         buffer_ [1] = (unsigned char) (value & 0xff);
     }
 
-    inline uint16_t get_uint16 (unsigned char *buffer_)
+    inline uint16_t get_uint16 (const unsigned char *buffer_)
     {
         return
             (((uint16_t) buffer_ [0]) << 8) |
@@ -60,7 +59,7 @@ namespace zmq
         buffer_ [3] = (unsigned char) (value & 0xff);
     }
 
-    inline uint32_t get_uint32 (unsigned char *buffer_)
+    inline uint32_t get_uint32 (const unsigned char *buffer_)
     {
         return
             (((uint32_t) buffer_ [0]) << 24) |
@@ -81,7 +80,7 @@ namespace zmq
         buffer_ [7] = (unsigned char) (value & 0xff);
     }
 
-    inline uint64_t get_uint64 (unsigned char *buffer_)
+    inline uint64_t get_uint64 (const unsigned char *buffer_)
     {
         return
             (((uint64_t) buffer_ [0]) << 56) |

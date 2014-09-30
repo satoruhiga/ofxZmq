@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2010 250bpm s.r.o.
-    Copyright (c) 2010-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -22,6 +21,7 @@
 #define __ZMQ_BLOB_HPP_INCLUDED__
 
 #include <string>
+#include <string.h>
 
 // Borrowed from id3lib_strings.h:
 // They seem to be doing something for MSC, but since I only have gcc, I'll just do that

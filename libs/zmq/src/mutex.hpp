@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -52,6 +50,11 @@ namespace zmq
             EnterCriticalSection (&cs);
         }
 
+        inline bool try_lock ()
+        {
+            return (TryEnterCriticalSection (&cs)) ? true : false;
+        }
+
         inline void unlock ()
         {
             LeaveCriticalSection (&cs);
@@ -96,6 +99,16 @@ namespace zmq
             posix_assert (rc);
         }
 
+        inline bool try_lock ()
+        {
+            int rc = pthread_mutex_trylock (&mutex);
+            if (rc == EBUSY)
+                return false;
+
+            posix_assert (rc);
+            return true;
+        }
+
         inline void unlock ()
         {
             int rc = pthread_mutex_unlock (&mutex);
@@ -114,5 +127,31 @@ namespace zmq
 }
 
 #endif
+
+
+namespace zmq
+{
+    struct scoped_lock_t
+    {
+        scoped_lock_t (mutex_t& mutex_)
+            : mutex (mutex_)
+        {
+            mutex.lock ();
+        }
+
+        ~scoped_lock_t ()
+        {
+            mutex.unlock ();
+        }
+
+    private:
+
+        mutex_t& mutex;
+
+        // Disable copy construction and assignment.
+        scoped_lock_t (const scoped_lock_t&);
+        const scoped_lock_t &operator = (const scoped_lock_t&);
+    };
+}
 
 #endif

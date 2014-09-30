@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -203,7 +201,7 @@ const char *zmq::wsa_error_no (int no_)
 void zmq::win_error (char *buffer_, size_t buffer_size_)
 {
     DWORD errcode = GetLastError ();
-#if defined WINCE
+#if defined _WIN32_WCE
     DWORD rc = FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM |
         FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errcode, MAKELANGID(LANG_NEUTRAL,
         SUBLANG_DEFAULT), (LPWSTR)buffer_, buffer_size_ / sizeof(wchar_t), NULL );

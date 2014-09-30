@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -29,8 +26,6 @@
 #include "own.hpp"
 #include "io_object.hpp"
 #include "pipe.hpp"
-#include "i_msg_source.hpp"
-#include "i_msg_sink.hpp"
 #include "socket_base.hpp"
 
 namespace zmq
@@ -45,9 +40,7 @@ namespace zmq
     class session_base_t :
         public own_t,
         public io_object_t,
-        public i_pipe_events,
-        public i_msg_source,
-        public i_msg_sink
+        public i_pipe_events
     {
     public:
 
@@ -59,12 +52,6 @@ namespace zmq
         //  To be used once only, when creating the session.
         void attach_pipe (zmq::pipe_t *pipe_);
 
-        //  i_msg_source interface implementation.
-        virtual int pull_msg (msg_t *msg_);
-
-        //  i_msg_sink interface implementation.
-        virtual int push_msg (msg_t *msg_);
-
         //  Following functions are the interface exposed towards the engine.
         virtual void reset ();
         void flush ();
@@ -74,7 +61,28 @@ namespace zmq
         void read_activated (zmq::pipe_t *pipe_);
         void write_activated (zmq::pipe_t *pipe_);
         void hiccuped (zmq::pipe_t *pipe_);
-        void terminated (zmq::pipe_t *pipe_);
+        void pipe_terminated (zmq::pipe_t *pipe_);
+
+        //  Delivers a message. Returns 0 if successful; -1 otherwise.
+        //  The function takes ownership of the message.
+        int push_msg (msg_t *msg_);
+
+        int zap_connect ();
+
+        //  Fetches a message. Returns 0 if successful; -1 otherwise.
+        //  The caller is responsible for freeing the message when no
+        //  longer used.
+        int pull_msg (msg_t *msg_);
+
+        //  Receives message from ZAP socket.
+        //  Returns 0 on success; -1 otherwise.
+        //  The caller is responsible for freeing the message.
+        int read_zap_msg (msg_t *msg_);
+
+        //  Sends message to ZAP socket.
+        //  Returns 0 on success; -1 otherwise.
+        //  The function takes ownership of the message.
+        int write_zap_msg (msg_t *msg_);
 
         socket_base_t *get_socket ();
 
@@ -112,9 +120,12 @@ namespace zmq
 
         //  Pipe connecting the session to its socket.
         zmq::pipe_t *pipe;
-        
+
+        //  Pipe used to exchange messages with ZAP socket.
+        zmq::pipe_t *zap_pipe;
+
         //  This set is added to with pipes we are disconnecting, but haven't yet completed
-        std::set<pipe_t *> terminating_pipes;
+        std::set <pipe_t *> terminating_pipes;
 
         //  This flag is true if the remainder of the message being processed
         //  is still in the in pipe.
@@ -139,10 +150,6 @@ namespace zmq
 
         //  True is linger timer is running.
         bool has_linger_timer;
-
-        //  If true, identity has been sent/received from the network.
-        bool identity_sent;
-        bool identity_received;
 
         //  Protocol and address to use when connecting.
         const address_t *addr;

@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -42,10 +39,18 @@ namespace zmq
         ~req_t ();
 
         //  Overloads of functions from socket_base_t.
-        int xsend (zmq::msg_t *msg_, int flags_);
-        int xrecv (zmq::msg_t *msg_, int flags_);
+        int xsend (zmq::msg_t *msg_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         bool xhas_out ();
+        int xsetsockopt (int option_, const void *optval_, size_t optvallen_);
+        void xpipe_terminated (zmq::pipe_t *pipe_);
+
+    protected:
+
+        //  Receive only from the pipe the request was sent to, discarding
+        //  frames from other pipes.
+        int recv_reply_pipe (zmq::msg_t *msg_);
 
     private:
 
@@ -57,11 +62,26 @@ namespace zmq
         //  of the message must be empty message part (backtrace stack bottom).
         bool message_begins;
 
+        //  The pipe the request was sent to and where the reply is expected.
+        zmq::pipe_t *reply_pipe;
+
+        //  Whether request id frames shall be sent and expected.
+        bool request_id_frames_enabled;
+
+        //  The current request id. It is incremented every time before a new
+        //  request is sent.
+        uint32_t request_id;
+
+        //  If false, send() will reset its internal state and terminate the
+        //  reply_pipe's connection instead of failing if a previous request is
+        //  still pending.
+        bool strict;
+
         req_t (const req_t&);
         const req_t &operator = (const req_t&);
     };
 
-    class req_session_t : public dealer_session_t
+    class req_session_t : public session_base_t
     {
     public:
 
@@ -77,7 +97,6 @@ namespace zmq
     private:
 
         enum {
-            identity,
             bottom,
             body
         } state;

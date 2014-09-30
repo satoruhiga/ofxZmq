@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -103,11 +100,11 @@ namespace zmq
         void read_activated (pipe_t *pipe_);
         void write_activated (pipe_t *pipe_);
         void hiccuped (pipe_t *pipe_);
-        void terminated (pipe_t *pipe_);
+        void pipe_terminated (pipe_t *pipe_);
         void lock();
         void unlock();
 
-        int monitor(const char *endpoint_, int events_);
+        int monitor (const char *endpoint_, int events_);
 
         void event_connected (std::string &addr_, int fd_);
         void event_connect_delayed (std::string &addr_, int err_);
@@ -116,9 +113,9 @@ namespace zmq
         void event_bind_failed (std::string &addr_, int err_);
         void event_accepted (std::string &addr_, int fd_);
         void event_accept_failed (std::string &addr_, int err_);
-        void event_closed (std::string &addr_, int fd_);
-        void event_close_failed (std::string &addr_, int fd_);
-        void event_disconnected (std::string &addr_, int fd_);
+        void event_closed (std::string &addr_, int fd_);        
+        void event_close_failed (std::string &addr_, int fd_);  
+        void event_disconnected (std::string &addr_, int fd_); 
 
     protected:
 
@@ -128,7 +125,7 @@ namespace zmq
         //  Concrete algorithms for the x- methods are to be defined by
         //  individual socket types.
         virtual void xattach_pipe (zmq::pipe_t *pipe_,
-            bool icanhasall_ = false) = 0;
+            bool subscribe_to_all_ = false) = 0;
 
         //  The default implementation assumes there are no specific socket
         //  options for the particular socket type. If not so, overload this
@@ -138,36 +135,34 @@ namespace zmq
 
         //  The default implementation assumes that send is not supported.
         virtual bool xhas_out ();
-        virtual int xsend (zmq::msg_t *msg_, int flags_);
+        virtual int xsend (zmq::msg_t *msg_);
 
         //  The default implementation assumes that recv in not supported.
         virtual bool xhas_in ();
-        virtual int xrecv (zmq::msg_t *msg_, int flags_);
+        virtual int xrecv (zmq::msg_t *msg_);
 
         //  i_pipe_events will be forwarded to these functions.
         virtual void xread_activated (pipe_t *pipe_);
         virtual void xwrite_activated (pipe_t *pipe_);
         virtual void xhiccuped (pipe_t *pipe_);
-        virtual void xterminated (pipe_t *pipe_) = 0;
+        virtual void xpipe_terminated (pipe_t *pipe_) = 0;
 
         //  Delay actual destruction of the socket.
         void process_destroy ();
 
         // Socket event data dispath
-        void monitor_event (zmq_event_t data_);
-
-        // Copy monitor specific event endpoints to event messages
-        void copy_monitor_address (char *dest_, std::string &src_);
+        void monitor_event (zmq_event_t data_, const std::string& addr_);
 
         // Monitor socket cleanup
         void stop_monitor ();
 
     private:
         //  Creates new endpoint ID and adds the endpoint to the map.
-        void add_endpoint (const char *addr_, own_t *endpoint_);
+        void add_endpoint (const char *addr_, own_t *endpoint_, pipe_t *pipe);
 
         //  Map of open endpoints.
-        typedef std::multimap <std::string, own_t *> endpoints_t;
+        typedef std::pair <own_t *, pipe_t*> endpoint_pipe_t;
+        typedef std::multimap <std::string, endpoint_pipe_t> endpoints_t;
         endpoints_t endpoints;
 
         //  Map of open inproc endpoints.
@@ -202,7 +197,7 @@ namespace zmq
         int check_protocol (const std::string &protocol_);
 
         //  Register the pipe with this socket.
-        void attach_pipe (zmq::pipe_t *pipe_, bool icanhasall_ = false);
+        void attach_pipe (zmq::pipe_t *pipe_, bool subscribe_to_all_ = false);
 
         //  Processes commands sent to this socket (if any). If timeout is -1,
         //  returns only after at least one command was processed.
@@ -243,6 +238,9 @@ namespace zmq
 
         // Bitmask of events being monitored
         int monitor_events;
+
+        // Last socket endpoint resolved URI
+        std::string last_endpoint;
 
         socket_base_t (const socket_base_t&);
         const socket_base_t &operator = (const socket_base_t&);

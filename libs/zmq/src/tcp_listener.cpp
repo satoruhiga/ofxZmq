@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2010 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -93,7 +91,8 @@ void zmq::tcp_listener_t::in_event ()
     tune_tcp_keepalives (fd, options.tcp_keepalive, options.tcp_keepalive_cnt, options.tcp_keepalive_idle, options.tcp_keepalive_intvl);
 
     //  Create the engine object for this connection.
-    stream_engine_t *engine = new (std::nothrow) stream_engine_t (fd, options, endpoint);
+    stream_engine_t *engine = new (std::nothrow)
+        stream_engine_t (fd, options, endpoint);
     alloc_assert (engine);
 
     //  Choose I/O thread to run connecter in. Given that we are already
@@ -148,7 +147,7 @@ int zmq::tcp_listener_t::get_address (std::string &addr_)
 int zmq::tcp_listener_t::set_address (const char *addr_)
 {
     //  Convert the textual address into address structure.
-    int rc = address.resolve (addr_, true, options.ipv4only ? true : false);
+    int rc = address.resolve (addr_, true, options.ipv6);
     if (rc != 0)
         return -1;
 
@@ -160,8 +159,9 @@ int zmq::tcp_listener_t::set_address (const char *addr_)
 #endif
 
     //  IPv6 address family not supported, try automatic downgrade to IPv4.
-    if (address.family () == AF_INET6 && errno == EAFNOSUPPORT &&
-          !options.ipv4only) {
+    if (address.family () == AF_INET6
+    && errno == EAFNOSUPPORT
+    && options.ipv6) {
         rc = address.resolve (addr_, true, true);
         if (rc != 0)
             return rc;
@@ -173,9 +173,11 @@ int zmq::tcp_listener_t::set_address (const char *addr_)
         errno = wsa_error_to_errno (WSAGetLastError ());
         return -1;
     }
+#if !defined _WIN32_WCE
     //  On Windows, preventing sockets to be inherited by child processes.
     BOOL brc = SetHandleInformation ((HANDLE) s, HANDLE_FLAG_INHERIT, 0);
     win_assert (brc);
+#endif
 #else
     if (s == -1)
         return -1;
@@ -185,6 +187,12 @@ int zmq::tcp_listener_t::set_address (const char *addr_)
     //  Switch it on in such cases.
     if (address.family () == AF_INET6)
         enable_ipv4_mapping (s);
+
+    //  Set the socket buffer limits for the underlying socket.
+    if (options.sndbuf != 0)
+        set_tcp_send_buffer (s, options.sndbuf);
+    if (options.rcvbuf != 0)
+        set_tcp_receive_buffer (s, options.rcvbuf);
 
     //  Allow reusing of the address.
     int flag = 1;
@@ -240,7 +248,8 @@ zmq::fd_t zmq::tcp_listener_t::accept ()
     //  Accept one connection and deal with different failure modes.
     zmq_assert (s != retired_fd);
 
-    struct sockaddr_storage ss = {};
+    struct sockaddr_storage ss;
+    memset (&ss, 0, sizeof (ss));
 #ifdef ZMQ_HAVE_HPUX
     int ss_len = sizeof (ss);
 #else
@@ -256,9 +265,11 @@ zmq::fd_t zmq::tcp_listener_t::accept ()
             WSAGetLastError () == WSAENOBUFS);
         return retired_fd;
     }
+#if !defined _WIN32_WCE
     //  On Windows, preventing sockets to be inherited by child processes.
     BOOL brc = SetHandleInformation ((HANDLE) sock, HANDLE_FLAG_INHERIT, 0);
     win_assert (brc);
+#endif
 #else
     if (sock == -1) {
         errno_assert (errno == EAGAIN || errno == EWOULDBLOCK ||

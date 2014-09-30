@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -45,8 +43,8 @@ namespace zmq
         //  This function translates textual TCP address into an address
         //  strcuture. If 'local' is true, names are resolved as local interface
         //  names. If it is false, names are resolved as remote hostnames.
-        //  If 'ipv4only' is true, the name will never resolve to IPv6 address.
-        int resolve (const char* name_, bool local_, bool ipv4only_);
+        //  If 'ipv6' is true, the name may resolve to IPv6 address.
+        int resolve (const char *name_, bool local_, bool ipv6_);
 
         //  The opposite to resolve()
         virtual int to_string (std::string &addr_);
@@ -60,10 +58,9 @@ namespace zmq
         socklen_t addrlen () const;
 
     protected:
-
-        int resolve_nic_name (const char *nic_, bool ipv4only_);
-        int resolve_interface (const char *interface_, bool ipv4only_);
-        int resolve_hostname (const char *hostname_, bool ipv4only_);
+        int resolve_nic_name (const char *nic_, bool ipv6_);
+        int resolve_interface (const char *interface_, bool ipv6_);
+        int resolve_hostname (const char *hostname_, bool ipv6_);
 
         union {
             sockaddr generic;
@@ -75,13 +72,12 @@ namespace zmq
     class tcp_address_mask_t : public tcp_address_t
     {
     public:
-
         tcp_address_mask_t ();
 
         // This function enhances tcp_address_t::resolve() with ability to parse
         // additional cidr-like(/xx) mask value at the end of the name string.
         // Works only with remote hostnames.
-        int resolve (const char* name_, bool ipv4only_);
+        int resolve (const char *name_, bool ipv6_);
 
         // The opposite to resolve()
         int to_string (std::string &addr_);
@@ -91,7 +87,6 @@ namespace zmq
         bool match_address (const struct sockaddr *ss, const socklen_t ss_len) const;
 
     private:
-
         int address_mask;
     };
 

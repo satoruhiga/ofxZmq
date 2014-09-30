@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -144,6 +142,11 @@ void zmq::select_t::start ()
 void zmq::select_t::stop ()
 {
     stopping = true;
+}
+
+int zmq::select_t::max_fds ()
+{
+    return FD_SETSIZE;
 }
 
 void zmq::select_t::loop ()

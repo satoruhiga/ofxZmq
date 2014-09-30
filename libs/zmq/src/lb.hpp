@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -40,9 +38,16 @@ namespace zmq
 
         void attach (pipe_t *pipe_);
         void activated (pipe_t *pipe_);
-        void terminated (pipe_t *pipe_);
+        void pipe_terminated (pipe_t *pipe_);
 
-        int send (msg_t *msg_, int flags_);
+        int send (msg_t *msg_);
+
+        //  Sends a message and stores the pipe that was used in pipe_.
+        //  It is possible for this function to return success but keep pipe_
+        //  unset if the rest of a multipart message to a terminated pipe is
+        //  being dropped. For the first frame, this will never happen.
+        int sendpipe (msg_t *msg_, pipe_t **pipe_);
+
         bool has_out ();
 
     private:

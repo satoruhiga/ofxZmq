@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -42,14 +40,14 @@ namespace zmq
         ~pair_t ();
 
         //  Overloads of functions from socket_base_t.
-        void xattach_pipe (zmq::pipe_t *pipe_, bool icanhasall_);
-        int xsend (zmq::msg_t *msg_, int flags_);
-        int xrecv (zmq::msg_t *msg_, int flags_);
+        void xattach_pipe (zmq::pipe_t *pipe_, bool subscribe_to_all_);
+        int xsend (zmq::msg_t *msg_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         bool xhas_out ();
         void xread_activated (zmq::pipe_t *pipe_);
         void xwrite_activated (zmq::pipe_t *pipe_);
-        void xterminated (zmq::pipe_t *pipe_);
+        void xpipe_terminated (zmq::pipe_t *pipe_);
 
     private:
 
@@ -57,21 +55,6 @@ namespace zmq
 
         pair_t (const pair_t&);
         const pair_t &operator = (const pair_t&);
-    };
-
-    class pair_session_t : public session_base_t
-    {
-    public:
-
-        pair_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~pair_session_t ();
-
-    private:
-
-        pair_session_t (const pair_session_t&);
-        const pair_session_t &operator = (const pair_session_t&);
     };
 
 }

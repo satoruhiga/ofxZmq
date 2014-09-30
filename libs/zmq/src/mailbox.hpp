@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -46,6 +44,13 @@ namespace zmq
         void send (const command_t &cmd_);
         int recv (command_t *cmd_, int timeout_);
         
+#ifdef HAVE_FORK
+        // close the file descriptors in the signaller. This is used in a forked
+        // child process to close the file descriptors so that they do not interfere
+        // with the context in the parent process.
+        void forked() { signaler.forked(); }
+#endif
+
     private:
 
         //  The pipe to store actual commands.

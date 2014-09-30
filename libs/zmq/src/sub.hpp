@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -42,28 +40,13 @@ namespace zmq
     protected:
 
         int xsetsockopt (int option_, const void *optval_, size_t optvallen_);
-        int xsend (zmq::msg_t *msg_, int flags_);
+        int xsend (zmq::msg_t *msg_);
         bool xhas_out ();
 
     private:
 
         sub_t (const sub_t&);
         const sub_t &operator = (const sub_t&);
-    };
-
-    class sub_session_t : public xsub_session_t
-    {
-    public:
-
-        sub_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            zmq::socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~sub_session_t ();
-
-    private:
-
-        sub_session_t (const sub_session_t&);
-        const sub_session_t &operator = (const sub_session_t&);
     };
 
 }

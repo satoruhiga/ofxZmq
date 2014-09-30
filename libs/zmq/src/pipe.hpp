@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -24,7 +21,7 @@
 #define __ZMQ_PIPE_HPP_INCLUDED__
 
 #include "msg.hpp"
-#include "ypipe.hpp"
+#include "ypipe_base.hpp"
 #include "config.hpp"
 #include "object.hpp"
 #include "stdint.hpp"
@@ -43,8 +40,10 @@ namespace zmq
     //  Delay specifies how the pipe behaves when the peer terminates. If true
     //  pipe receives all the pending messages before terminating, otherwise it
     //  terminates straight away.
+    //  If conflate is true, only the most recently arrived message could be
+    //  read (older messages are discarded)
     int pipepair (zmq::object_t *parents_ [2], zmq::pipe_t* pipes_ [2],
-        int hwms_ [2], bool delays_ [2]);
+        int hwms_ [2], bool conflate_ [2]);
 
     struct i_pipe_events
     {
@@ -53,7 +52,7 @@ namespace zmq
         virtual void read_activated (zmq::pipe_t *pipe_) = 0;
         virtual void write_activated (zmq::pipe_t *pipe_) = 0;
         virtual void hiccuped (zmq::pipe_t *pipe_) = 0;
-        virtual void terminated (zmq::pipe_t *pipe_) = 0;
+        virtual void pipe_terminated (zmq::pipe_t *pipe_) = 0;
     };
 
     //  Note that pipe can be stored in three different arrays.
@@ -67,9 +66,9 @@ namespace zmq
         public array_item_t <3>
     {
         //  This allows pipepair to create pipe objects.
-        friend int pipepair (zmq::object_t *parents_ [2],
-            zmq::pipe_t* pipes_ [2], int hwms_ [2], bool delays_ [2]);
-
+        friend int pipepair (zmq::object_t *parents_ [2], zmq::pipe_t* pipes_ [2],
+            int hwms_ [2], bool conflate_ [2]);
+            
     public:
 
         //  Specifies the object to send events to.
@@ -103,6 +102,9 @@ namespace zmq
         //  all the messages on the fly. Causes 'hiccuped' event to be generated
         //  in the peer.
         void hiccup ();
+        
+        // Ensure the pipe wont block on receiving pipe_term.
+        void set_nodelay ();
 
         //  Ask pipe to terminate. The termination will happen asynchronously
         //  and user will be notified about actual deallocation by 'terminated'
@@ -110,10 +112,13 @@ namespace zmq
         //  before actual shutdown.
         void terminate (bool delay_);
 
+        // set the high water marks.
+        void set_hwms (int inhwm_, int outhwm_);
+
     private:
 
         //  Type of the underlying lock-free pipe.
-        typedef ypipe_t <msg_t, message_pipe_granularity> upipe_t;
+        typedef ypipe_base_t <msg_t, message_pipe_granularity> upipe_t;
 
         //  Command handlers.
         void process_activate_read ();
@@ -123,12 +128,12 @@ namespace zmq
         void process_pipe_term_ack ();
 
         //  Handler for delimiter read from the pipe.
-        void delimit ();
+        void process_delimiter ();
 
         //  Constructor is private. Pipe can only be created using
         //  pipepair function.
         pipe_t (object_t *parent_, upipe_t *inpipe_, upipe_t *outpipe_,
-            int inhwm_, int outhwm_, bool delay_);
+            int inhwm_, int outhwm_, bool conflate_);
 
         //  Pipepair uses this function to let us know about
         //  the peer pipe object.
@@ -165,22 +170,24 @@ namespace zmq
         //  Sink to send events to.
         i_pipe_events *sink;
 
-        //  State of the pipe endpoint. Active is common state before any
-        //  termination begins. Delimited means that delimiter was read from
-        //  pipe before term command was received. Pending means that term
-        //  command was already received from the peer but there are still
-        //  pending messages to read. Terminating means that all pending
-        //  messages were already read and all we are waiting for is ack from
-        //  the peer. Terminated means that 'terminate' was explicitly called
-        //  by the user. Double_terminated means that user called 'terminate'
-        //  and then we've got term command from the peer as well.
+        //  States of the pipe endpoint:
+        //  active: common state before any termination begins,
+        //  delimiter_received: delimiter was read from pipe before
+        //      term command was received,
+        //  waiting_fo_delimiter: term command was already received
+        //      from the peer but there are still pending messages to read,
+        //  term_ack_sent: all pending messages were already read and
+        //      all we are waiting for is ack from the peer,
+        //  term_req_sent1: 'terminate' was explicitly called by the user,
+        //  term_req_sent2: user called 'terminate' and then we've got
+        //      term command from the peer as well.
         enum {
             active,
-            delimited,
-            pending,
-            terminating,
-            terminated,
-            double_terminated
+            delimiter_received,
+            waiting_for_delimiter,
+            term_ack_sent,
+            term_req_sent1,
+            term_req_sent2
         } state;
 
         //  If true, we receive all the pending inbound messages before
@@ -196,6 +203,8 @@ namespace zmq
 
         //  Computes appropriate low watermark from the given high watermark.
         static int compute_lwm (int hwm_);
+
+        bool conflate;
 
         //  Disable copying.
         pipe_t (const pipe_t&);

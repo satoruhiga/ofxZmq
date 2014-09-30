@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -31,9 +28,13 @@
 #include "tcp_address.hpp"
 #include "../include/zmq.h"
 
+//  Normal base 256 key is 32 bytes
+#define CURVE_KEYSIZE       32
+//  Key encoded using Z85 is 40 bytes
+#define CURVE_KEYSIZE_Z85   40
+
 namespace zmq
 {
-
     struct options_t
     {
         options_t ();
@@ -52,10 +53,7 @@ namespace zmq
         unsigned char identity_size;
         unsigned char identity [256];
 
-        // Last socket endpoint resolved URI
-        std::string last_endpoint;
-
-        //  Maximum tranfer rate [kb/s]. Default 100kb/s.
+        //  Maximum transfer rate [kb/s]. Default 100kb/s.
         int rate;
 
         //  Reliability time interval [ms]. Default 10 seconds.
@@ -92,28 +90,21 @@ namespace zmq
         int rcvtimeo;
         int sndtimeo;
 
-        //  If 1, indicates the use of IPv4 sockets only, it will not be
-        //  possible to communicate with IPv6-only hosts. If 0, the socket can
-        //  connect to and accept connections from both IPv4 and IPv6 hosts.
-        int ipv4only;
-        
+        //  If true, IPv6 is enabled (as well as IPv4)
+        bool ipv6;
+
         //  If 1, connecting pipes are not attached immediately, meaning a send()
         //  on a socket with only connecting pipes would block
-        int delay_attach_on_connect;
-
-        //  If true, session reads all the pending messages from the pipe and
-        //  sends them to the network when socket is closed.
-        bool delay_on_close;
-
-        //  If true, socket reads all the messages from the pipe and delivers
-        //  them to the user when the peer terminates.
-        bool delay_on_disconnect;
+        int immediate;
 
         //  If 1, (X)SUB socket should filter the messages. If 0, it should not.
         bool filter;
 
         //  If true, the identity message is forwarded to the socket.
         bool recv_identity;
+
+        // if true, router socket accepts non-zmq tcp connections
+        bool raw_sock;
 
         //  TCP keep-alive settings.
         //  Defaults to -1 = do not change socket options
@@ -126,10 +117,33 @@ namespace zmq
         typedef std::vector <tcp_address_mask_t> tcp_accept_filters_t;
         tcp_accept_filters_t tcp_accept_filters;
 
+        //  Security mechanism for all connections on this socket
+        int mechanism;
+
+        //  If peer is acting as server for PLAIN or CURVE mechanisms
+        int as_server;
+
+        //  ZAP authentication domain
+        std::string zap_domain;
+
+        //  Security credentials for PLAIN mechanism
+        std::string plain_username;
+        std::string plain_password;
+
+        //  Security credentials for CURVE mechanism
+        uint8_t curve_public_key [CURVE_KEYSIZE];
+        uint8_t curve_secret_key [CURVE_KEYSIZE];
+        uint8_t curve_server_key [CURVE_KEYSIZE];
+
         //  ID of the socket.
         int socket_id;
-    };
 
+        //  If true, socket conflates outgoing/incoming messages.
+        //  Applicable to dealer, push/pull, pub/sub socket types.
+        //  Cannot receive multi-part messages.
+        //  Ignores hwm
+        bool conflate;
+    };
 }
 
 #endif

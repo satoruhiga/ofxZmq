@@ -1,8 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2011 iMatix Corporation
-    Copyright (c) 2011 VMware, Inc.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -48,15 +45,15 @@ namespace zmq
         ~router_t ();
 
         //  Overloads of functions from socket_base_t.
-        void xattach_pipe (zmq::pipe_t *pipe_, bool icanhasall_);
+        void xattach_pipe (zmq::pipe_t *pipe_, bool subscribe_to_all_);
         int xsetsockopt (int option_, const void *optval_, size_t optvallen_);
-        int xsend (msg_t *msg_, int flags_);
-        int xrecv (msg_t *msg_, int flags_);
+        int xsend (zmq::msg_t *msg_);
+        int xrecv (zmq::msg_t *msg_);
         bool xhas_in ();
         bool xhas_out ();
         void xread_activated (zmq::pipe_t *pipe_);
         void xwrite_activated (zmq::pipe_t *pipe_);
-        void xterminated (zmq::pipe_t *pipe_);
+        void xpipe_terminated (zmq::pipe_t *pipe_);
 
     protected:
 
@@ -113,24 +110,13 @@ namespace zmq
         // If true, report EAGAIN to the caller instead of silently dropping 
         // the message targeting an unknown peer.
         bool mandatory;
+        bool raw_sock;
+
+        // if true, send an empty message to every connected router peer
+        bool probe_router;
 
         router_t (const router_t&);
         const router_t &operator = (const router_t&);
-    };
-
-    class router_session_t : public session_base_t
-    {
-    public:
-
-        router_session_t (zmq::io_thread_t *io_thread_, bool connect_,
-            socket_base_t *socket_, const options_t &options_,
-            const address_t *addr_);
-        ~router_session_t ();
-
-    private:
-
-        router_session_t (const router_session_t&);
-        const router_session_t &operator = (const router_session_t&);
     };
 
 }

@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2011 250bpm s.r.o.
-    Copyright (c) 2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -73,6 +72,11 @@ namespace zmq
 
         reaper_t (const reaper_t&);
         const reaper_t &operator = (const reaper_t&);
+
+#ifdef HAVE_FORK
+        // the process that created this context. Used to detect forking.
+        pid_t pid;
+#endif
     };
 
 }

@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2011 250bpm s.r.o.
-    Copyright (c) 2011-2012 Spotify AB
-    Copyright (c) 2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -53,10 +51,10 @@ zmq::mtrie_t::~mtrie_t ()
         delete next.node;
         next.node = 0;
     }
-    else if (count > 1) {
+    else 
+    if (count > 1) {
         for (unsigned short i = 0; i != count; ++i)
-            if (next.table [i])
-                delete next.table [i];
+            delete next.table [i];
         free (next.table);
     }
 }
@@ -90,7 +88,8 @@ bool zmq::mtrie_t::add_helper (unsigned char *prefix_, size_t size_,
             count = 1;
             next.node = NULL;
         }
-        else if (count == 1) {
+        else 
+        if (count == 1) {
             unsigned char oldc = min;
             mtrie_t *oldp = next.node;
             count = (min < c ? c - min : min - c) + 1;
@@ -102,8 +101,8 @@ bool zmq::mtrie_t::add_helper (unsigned char *prefix_, size_t size_,
             min = std::min (min, c);
             next.table [oldc - min] = oldp;
         }
-        else if (min < c) {
-
+        else 
+        if (min < c) {
             //  The new character is above the current character range.
             unsigned short old_count = count;
             count = c - min + 1;
@@ -114,7 +113,6 @@ bool zmq::mtrie_t::add_helper (unsigned char *prefix_, size_t size_,
                 next.table [i] = NULL;
         }
         else {
-
             //  The new character is below the current character range.
             unsigned short old_count = count;
             count = (min + old_count) - c;
@@ -244,7 +242,8 @@ void zmq::mtrie_t::rm_helper (pipe_t *pipe_, unsigned char **buff_,
         count = 0;
     }
     //  Compact the node table if possible
-    else if (live_nodes == 1) {
+    else 
+    if (live_nodes == 1) {
         //  If there's only one live node in the table we can
         //  switch to using the more compact single-node
         //  representation
@@ -257,7 +256,8 @@ void zmq::mtrie_t::rm_helper (pipe_t *pipe_, unsigned char **buff_,
         count = 1;
         min = new_min;
     }
-    else if (new_min > min || new_max < min + count - 1) {
+    else
+    if (new_min > min || new_max < min + count - 1) {
         zmq_assert (new_max - new_min + 1 > 1);
 
         mtrie_t **old_table = next.table;
@@ -342,7 +342,8 @@ bool zmq::mtrie_t::rm_helper (unsigned char *prefix_, size_t size_,
                 free (next.table);
                 next.node = oldp;
             }
-            else if (c == min) {
+            else
+            if (c == min) {
                 //  We can compact the table "from the left"
                 unsigned short i;
                 for (i = 1; i < count; ++i)
@@ -358,7 +359,8 @@ bool zmq::mtrie_t::rm_helper (unsigned char *prefix_, size_t size_,
                 memmove (next.table, old_table + i, sizeof (mtrie_t*) * count);
                 free (old_table);
             }
-            else if (c == min + count - 1) {
+            else
+            if (c == min + count - 1) {
                 //  We can compact the table "from the right"
                 unsigned short i;
                 for (i = 1; i < count; ++i)

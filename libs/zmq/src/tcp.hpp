@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -29,6 +27,12 @@ namespace zmq
 
     //  Tunes the supplied TCP socket for the best latency.
     void tune_tcp_socket (fd_t s_);
+
+    //  Sets the socket send buffer size.
+    void set_tcp_send_buffer (fd_t sockfd_, int bufsize_);
+
+    //  Sets the socket receive buffer size.
+    void set_tcp_receive_buffer (fd_t sockfd_, int bufsize_);
 
     //  Tunes TCP keep-alives
     void tune_tcp_keepalives (fd_t s_, int keepalive_, int keepalive_cnt_, int keepalive_idle_, int keepalive_intvl_);

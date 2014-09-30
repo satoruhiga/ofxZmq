@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -43,7 +41,7 @@ void zmq::thread_t::start (thread_fn *tfn_, void *arg_)
 {
     tfn = tfn_;
     arg =arg_;
-#if defined WINCE
+#if defined _WIN32_WCE
     descriptor = (HANDLE) CreateThread (NULL, 0,
         &::thread_routine, this, 0 , NULL);
 #else

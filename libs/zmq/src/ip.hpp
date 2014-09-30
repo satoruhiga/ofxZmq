@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2010-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -22,6 +20,7 @@
 #ifndef __ZMQ_IP_HPP_INCLUDED__
 #define __ZMQ_IP_HPP_INCLUDED__
 
+#include <string>
 #include "fd.hpp"
 
 namespace zmq
@@ -36,6 +35,10 @@ namespace zmq
     //  Enable IPv4-mapping of addresses in case it is disabled by default.
     void enable_ipv4_mapping (fd_t s_);
 
+    //  Returns string representation of peer's address.
+    //  Socket sockfd_ must be connected. Returns true iff successful.
+    bool get_peer_ip_address (fd_t sockfd_, std::string &ip_addr_);
+
 }
 
-#endif 
+#endif

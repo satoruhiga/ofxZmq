@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2007-2012 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -26,23 +25,25 @@
 namespace zmq
 {
 
-    // Forward declaration
-    struct i_msg_sink;
+    class msg_t;
 
     //  Interface to be implemented by message decoder.
 
-    struct i_decoder
+    class i_decoder
     {
+    public:
         virtual ~i_decoder () {}
-
-        virtual void set_msg_sink (i_msg_sink *msg_sink_) = 0;
 
         virtual void get_buffer (unsigned char **data_, size_t *size_) = 0;
 
-        virtual size_t process_buffer (unsigned char *data_, size_t size_) = 0;
+        //  Decodes data pointed to by data_.
+        //  When a message is decoded, 1 is returned.
+        //  When the decoder needs more data, 0 is returnd.
+        //  On error, -1 is returned and errno is set accordingly.
+        virtual int decode (const unsigned char *data_, size_t size_,
+                            size_t &processed) = 0;
 
-        virtual bool stalled () = 0;
-
+        virtual msg_t *msg () = 0;
     };
 
 }

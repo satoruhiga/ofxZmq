@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -50,6 +48,9 @@ zmq::kqueue_t::kqueue_t () :
     //  Create event queue
     kqueue_fd = kqueue ();
     errno_assert (kqueue_fd != -1);
+#ifdef HAVE_FORK
+    pid = getpid();
+#endif
 }
 
 zmq::kqueue_t::~kqueue_t ()
@@ -151,6 +152,11 @@ void zmq::kqueue_t::stop ()
     stopping = true;
 }
 
+int zmq::kqueue_t::max_fds ()
+{
+    return -1;
+}
+
 void zmq::kqueue_t::loop ()
 {
     while (!stopping) {
@@ -163,6 +169,13 @@ void zmq::kqueue_t::loop ()
         timespec ts = {timeout / 1000, (timeout % 1000) * 1000000};
         int n = kevent (kqueue_fd, NULL, 0, &ev_buf [0], max_io_events,
             timeout ? &ts: NULL);
+#ifdef HAVE_FORK
+        if (unlikely(pid != getpid())) {
+            //printf("zmq::kqueue_t::loop aborting on forked child %d\n", (int)getpid());
+            // simply exit the loop in a forked process.
+            return;
+        }
+#endif
         if (n == -1) {
             errno_assert (errno == EINTR);
             continue;

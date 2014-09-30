@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -35,7 +33,7 @@ zmq::rep_t::~rep_t ()
 {
 }
 
-int zmq::rep_t::xsend (msg_t *msg_, int flags_)
+int zmq::rep_t::xsend (msg_t *msg_)
 {
     //  If we are in the middle of receiving a request, we cannot send reply.
     if (!sending_reply) {
@@ -46,7 +44,7 @@ int zmq::rep_t::xsend (msg_t *msg_, int flags_)
     bool more = msg_->flags () & msg_t::more ? true : false;
 
     //  Push message to the reply pipe.
-    int rc = router_t::xsend (msg_, flags_);
+    int rc = router_t::xsend (msg_);
     if (rc != 0)
         return rc;
 
@@ -57,7 +55,7 @@ int zmq::rep_t::xsend (msg_t *msg_, int flags_)
     return 0;
 }
 
-int zmq::rep_t::xrecv (msg_t *msg_, int flags_)
+int zmq::rep_t::xrecv (msg_t *msg_)
 {
     //  If we are in middle of sending a reply, we cannot receive next request.
     if (sending_reply) {
@@ -69,7 +67,7 @@ int zmq::rep_t::xrecv (msg_t *msg_, int flags_)
     //  to the reply pipe.
     if (request_begins) {
         while (true) {
-            int rc = router_t::xrecv (msg_, flags_);
+            int rc = router_t::xrecv (msg_);
             if (rc != 0)
                 return rc;
 
@@ -78,7 +76,7 @@ int zmq::rep_t::xrecv (msg_t *msg_, int flags_)
                 bool bottom = (msg_->size () == 0);
 
                 //  Push it to the reply pipe.
-                rc = router_t::xsend (msg_, flags_);
+                rc = router_t::xsend (msg_);
                 errno_assert (rc == 0);
 
                 if (bottom)
@@ -95,7 +93,7 @@ int zmq::rep_t::xrecv (msg_t *msg_, int flags_)
     }
 
     //  Get next message part to return to the user.
-    int rc = router_t::xrecv (msg_, flags_);
+    int rc = router_t::xrecv (msg_);
     if (rc != 0)
        return rc;
 
@@ -123,15 +121,3 @@ bool zmq::rep_t::xhas_out ()
 
     return router_t::xhas_out ();
 }
-
-zmq::rep_session_t::rep_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    router_session_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::rep_session_t::~rep_session_t ()
-{
-}
-

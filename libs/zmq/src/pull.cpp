@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2010 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -34,10 +32,10 @@ zmq::pull_t::~pull_t ()
 {
 }
 
-void zmq::pull_t::xattach_pipe (pipe_t *pipe_, bool icanhasall_)
+void zmq::pull_t::xattach_pipe (pipe_t *pipe_, bool subscribe_to_all_)
 {
-    // icanhasall_ is unused
-    (void)icanhasall_;
+    // subscribe_to_all_ is unused
+    (void)subscribe_to_all_;
 
     zmq_assert (pipe_);
     fq.attach (pipe_);
@@ -48,16 +46,13 @@ void zmq::pull_t::xread_activated (pipe_t *pipe_)
     fq.activated (pipe_);
 }
 
-void zmq::pull_t::xterminated (pipe_t *pipe_)
+void zmq::pull_t::xpipe_terminated (pipe_t *pipe_)
 {
-    fq.terminated (pipe_);
+    fq.pipe_terminated (pipe_);
 }
 
-int zmq::pull_t::xrecv (msg_t *msg_, int flags_)
+int zmq::pull_t::xrecv (msg_t *msg_)
 {
-    // flags_ is unused
-    (void)flags_;
-
     return fq.recv (msg_);
 }
 
@@ -65,15 +60,3 @@ bool zmq::pull_t::xhas_in ()
 {
     return fq.has_in ();
 }
-
-zmq::pull_session_t::pull_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    session_base_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::pull_session_t::~pull_session_t ()
-{
-}
-

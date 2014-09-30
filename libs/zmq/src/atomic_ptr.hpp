@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -30,6 +28,8 @@
 #define ZMQ_ATOMIC_PTR_X86
 #elif defined __ARM_ARCH_7A__ && defined __GNUC__
 #define ZMQ_ATOMIC_PTR_ARM
+#elif defined __tile__
+#define ZMQ_ATOMIC_PTR_TILE
 #elif defined ZMQ_HAVE_WINDOWS
 #define ZMQ_ATOMIC_PTR_WINDOWS
 #elif (defined ZMQ_HAVE_SOLARIS || defined ZMQ_HAVE_NETBSD)
@@ -44,6 +44,8 @@
 #include "windows.hpp"
 #elif defined ZMQ_ATOMIC_PTR_ATOMIC_H
 #include <atomic.h>
+#elif defined ZMQ_ATOMIC_PTR_TILE
+#include <arch/atomic.h>
 #endif
 
 namespace zmq
@@ -82,6 +84,8 @@ namespace zmq
             return (T*) InterlockedExchangePointer ((PVOID*) &ptr, val_);
 #elif defined ZMQ_ATOMIC_PTR_ATOMIC_H
             return (T*) atomic_swap_ptr (&ptr, val_);
+#elif defined ZMQ_ATOMIC_PTR_TILE
+            return (T*) arch_atomic_exchange (&ptr, val_);
 #elif defined ZMQ_ATOMIC_PTR_X86
             T *old;
             __asm__ volatile (
@@ -125,6 +129,8 @@ namespace zmq
                 (volatile PVOID*) &ptr, val_, cmp_);
 #elif defined ZMQ_ATOMIC_PTR_ATOMIC_H
             return (T*) atomic_cas_ptr (&ptr, cmp_, val_);
+#elif defined ZMQ_ATOMIC_PTR_TILE
+            return (T*) arch_atomic_val_compare_and_exchange (&ptr, cmp_, val_);
 #elif defined ZMQ_ATOMIC_PTR_X86
             T *old;
             __asm__ volatile (

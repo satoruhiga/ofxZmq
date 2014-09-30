@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -32,7 +30,7 @@ zmq::pub_t::~pub_t ()
 {
 }
 
-int zmq::pub_t::xrecv (class msg_t *, int)
+int zmq::pub_t::xrecv (class msg_t *)
 {
     //  Messages cannot be received from PUB socket.
     errno = ENOTSUP;
@@ -43,15 +41,3 @@ bool zmq::pub_t::xhas_in ()
 {
     return false;
 }
-
-zmq::pub_session_t::pub_session_t (io_thread_t *io_thread_, bool connect_,
-      socket_base_t *socket_, const options_t &options_,
-      const address_t *addr_) :
-    xpub_session_t (io_thread_, connect_, socket_, options_, addr_)
-{
-}
-
-zmq::pub_session_t::~pub_session_t ()
-{
-}
-

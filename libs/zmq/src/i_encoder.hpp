@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2007-2012 iMatix Corporation
-    Copyright (c) 2007-2012 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -27,7 +26,7 @@ namespace zmq
 {
 
     //  Forward declaration
-    struct i_msg_source;
+    class msg_t;
 
     //  Interface to be implemented by message encoder.
 
@@ -35,19 +34,15 @@ namespace zmq
     {
         virtual ~i_encoder () {}
 
-        //  Set message producer.
-        virtual void set_msg_source (i_msg_source *msg_source_) = 0;
-
         //  The function returns a batch of binary data. The data
         //  are filled to a supplied buffer. If no buffer is supplied (data_
         //  is NULL) encoder will provide buffer of its own.
-        //  If offset is not NULL, it is filled by offset of the first message
-        //  in the batch.If there's no beginning of a message in the batch,
-        //  offset is set to -1.
-        virtual void get_data (unsigned char **data_, size_t *size_,
-            int *offset_ = NULL) = 0;
+        //  Function returns 0 when a new message is required.
+        virtual size_t encode (unsigned char **data_, size_t size) = 0;
 
-        virtual bool has_data () = 0;
+        //  Load a new message into encoder.
+        virtual void load_msg (msg_t *msg_) = 0;
+
     };
 
 }

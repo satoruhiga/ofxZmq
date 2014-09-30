@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -26,7 +24,7 @@
 #include "../include/zmq.h"
 
 #include <assert.h>
-#if defined WINCE
+#if defined _WIN32_WCE
 #include "..\builds\msvc\errno.hpp"
 #else
 #include <errno.h>
@@ -42,6 +40,11 @@
 #include "windows.hpp"
 #else
 #include <netdb.h>
+#endif
+
+// EPROTO is not used by OpenBSD and maybe other platforms.
+#ifndef EPROTO
+#define EPROTO 0
 #endif
 
 namespace zmq

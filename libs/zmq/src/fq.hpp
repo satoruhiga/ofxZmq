@@ -1,7 +1,5 @@
 /*
-    Copyright (c) 2009-2011 250bpm s.r.o.
-    Copyright (c) 2007-2009 iMatix Corporation
-    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+    Copyright (c) 2007-2013 Contributors as noted in the AUTHORS file
 
     This file is part of 0MQ.
 
@@ -42,7 +40,7 @@ namespace zmq
 
         void attach (pipe_t *pipe_);
         void activated (pipe_t *pipe_);
-        void terminated (pipe_t *pipe_);
+        void pipe_terminated (pipe_t *pipe_);
 
         int recv (msg_t *msg_);
         int recvpipe (msg_t *msg_, pipe_t **pipe_);
