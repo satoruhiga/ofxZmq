@@ -20,7 +20,7 @@ cp -r src $ZMQ_DIR
 cp COPYING $ZMQ_DIR
 popd
 
-git clone git@github.com:zeromq/cppzmq.git
+git clone https://github.com/zeromq/cppzmq.git
 pushd cppzmq
 cp zmq.hpp $ZMQ_DIR/include
 popd
