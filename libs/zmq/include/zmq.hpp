@@ -282,7 +282,7 @@ namespace zmq
             ZMQ_ASSERT (rc == 0);
 
             rc = zmq_ctx_set (ptr, ZMQ_MAX_SOCKETS, max_sockets_);
-            ZMQ_ASSERT (rc == 0);
+            // ZMQ_ASSERT (rc == 0);
         }
 
 #ifdef ZMQ_HAS_RVALUE_REFS
