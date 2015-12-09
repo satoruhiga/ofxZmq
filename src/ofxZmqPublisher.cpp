@@ -9,6 +9,11 @@ void ofxZmqPublisher::bind(string addr)
 	ofxZmqSocket::bind(addr);
 }
 
+void ofxZmqPublisher::connect(string addr)
+{
+	ofxZmqSocket::connect(addr);
+}
+
 bool ofxZmqPublisher::send(const void *data, size_t len, bool nonblocking, bool more)
 {
 	return ofxZmqSocket::send(data, len, nonblocking, more);

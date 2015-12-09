@@ -10,6 +10,7 @@ public:
 	ofxZmqSubscriber();
 	
 	void connect(string addr);
+	void bind(string addr);
 	void setFilter(string filter);
 
 	bool receive(string &data);
