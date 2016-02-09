@@ -11,7 +11,7 @@ void ofxZmqPublisher::bind(string addr)
 
 void ofxZmqPublisher::unbind(string addr)
 {
-    ofxZmqSocket::unbind(addr);
+	ofxZmqSocket::unbind(addr);
 }
 
 bool ofxZmqPublisher::send(const void *data, size_t len, bool nonblocking, bool more)

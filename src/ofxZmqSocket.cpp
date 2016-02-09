@@ -39,12 +39,12 @@ void ofxZmqSocket::bind(string addr)
 
 void ofxZmqSocket::disconnect(string addr)
 {
-    socket.disconnect(addr.c_str());
+	socket.disconnect(addr.c_str());
 }
 
 void ofxZmqSocket::unbind(string addr)
 {
-    socket.unbind(addr.c_str());
+	socket.unbind(addr.c_str());
 }
 
 

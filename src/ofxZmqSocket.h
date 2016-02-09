@@ -32,8 +32,8 @@ protected:
 
 	void connect(string addr);
 	void bind(string addr);
-    void disconnect(string addr);
-    void unbind(string addr);
+	void disconnect(string addr);
+	void unbind(string addr);
 
 	bool send(const void *data, size_t len, bool nonblocking, bool more);
 	bool send(void *data, size_t len, bool nonblocking, bool more);

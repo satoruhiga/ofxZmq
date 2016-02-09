@@ -12,7 +12,7 @@ void ofxZmqSubscriber::connect(string addr)
 
 void ofxZmqSubscriber::disconnect(string addr)
 {
-    ofxZmqSocket::disconnect(addr);
+	ofxZmqSocket::disconnect(addr);
 }
 
 bool ofxZmqSubscriber::receive(string &data)
