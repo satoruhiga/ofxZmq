@@ -37,6 +37,17 @@ void ofxZmqSocket::bind(string addr)
 	socket.bind(addr.c_str());
 }
 
+void ofxZmqSocket::disconnect(string addr)
+{
+    socket.disconnect(addr.c_str());
+}
+
+void ofxZmqSocket::unbind(string addr)
+{
+    socket.unbind(addr.c_str());
+}
+
+
 bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool more)
 {
 	zmq::message_t m(len);

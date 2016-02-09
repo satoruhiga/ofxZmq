@@ -11,6 +11,7 @@ public:
 	
 	void connect(string addr);
 	void setFilter(string filter);
+    void disconnect(string addr);
 
 	bool receive(string &data);
 	bool receive(ofBuffer &data);
