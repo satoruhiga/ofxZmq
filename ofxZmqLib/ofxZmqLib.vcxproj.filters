@@ -255,6 +255,27 @@
     <ClCompile Include="..\libs\zmq\src\curve_client.cpp">
       <Filter>libs\zmq\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxZmq.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqPair.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqPublisher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqReply.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqRequest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqSocket.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxZmqSubscriber.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\zmq\src\curve_server.hpp">
@@ -574,6 +595,30 @@
     </ClInclude>
     <ClInclude Include="..\libs\zmq\include\zmq.h">
       <Filter>libs\zmq\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmq.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqConfig.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqPair.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqPublisher.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqReply.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqRequest.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqSocket.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxZmqSubscriber.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

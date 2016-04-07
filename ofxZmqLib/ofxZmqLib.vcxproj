@@ -98,6 +98,13 @@
     <ClCompile Include="..\libs\zmq\src\xsub.cpp" />
     <ClCompile Include="..\libs\zmq\src\zmq.cpp" />
     <ClCompile Include="..\libs\zmq\src\zmq_utils.cpp" />
+    <ClCompile Include="..\src\ofxZmq.cpp" />
+    <ClCompile Include="..\src\ofxZmqPair.cpp" />
+    <ClCompile Include="..\src\ofxZmqPublisher.cpp" />
+    <ClCompile Include="..\src\ofxZmqReply.cpp" />
+    <ClCompile Include="..\src\ofxZmqRequest.cpp" />
+    <ClCompile Include="..\src\ofxZmqSocket.cpp" />
+    <ClCompile Include="..\src\ofxZmqSubscriber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\zmq\include\zmq.h" />
@@ -206,6 +213,14 @@
     <ClInclude Include="..\libs\zmq\src\ypipe_base.hpp" />
     <ClInclude Include="..\libs\zmq\src\ypipe_conflate.hpp" />
     <ClInclude Include="..\libs\zmq\src\yqueue.hpp" />
+    <ClInclude Include="..\src\ofxZmq.h" />
+    <ClInclude Include="..\src\ofxZmqConfig.h" />
+    <ClInclude Include="..\src\ofxZmqPair.h" />
+    <ClInclude Include="..\src\ofxZmqPublisher.h" />
+    <ClInclude Include="..\src\ofxZmqReply.h" />
+    <ClInclude Include="..\src\ofxZmqRequest.h" />
+    <ClInclude Include="..\src\ofxZmqSocket.h" />
+    <ClInclude Include="..\src\ofxZmqSubscriber.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F7CD569-F3E4-4C44-991D-01EB9037794E}</ProjectGuid>
