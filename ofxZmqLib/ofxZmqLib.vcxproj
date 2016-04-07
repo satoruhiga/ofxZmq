@@ -19,193 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\libs\zmq\src\address.cpp" />
-    <ClCompile Include="..\libs\zmq\src\clock.cpp" />
-    <ClCompile Include="..\libs\zmq\src\ctx.cpp" />
-    <ClCompile Include="..\libs\zmq\src\curve_client.cpp" />
-    <ClCompile Include="..\libs\zmq\src\curve_server.cpp" />
-    <ClCompile Include="..\libs\zmq\src\dealer.cpp" />
-    <ClCompile Include="..\libs\zmq\src\devpoll.cpp" />
-    <ClCompile Include="..\libs\zmq\src\dist.cpp" />
-    <ClCompile Include="..\libs\zmq\src\epoll.cpp" />
-    <ClCompile Include="..\libs\zmq\src\err.cpp" />
-    <ClCompile Include="..\libs\zmq\src\fq.cpp" />
-    <ClCompile Include="..\libs\zmq\src\gssapi_client.cpp" />
-    <ClCompile Include="..\libs\zmq\src\gssapi_mechanism_base.cpp" />
-    <ClCompile Include="..\libs\zmq\src\gssapi_server.cpp" />
-    <ClCompile Include="..\libs\zmq\src\io_object.cpp" />
-    <ClCompile Include="..\libs\zmq\src\io_thread.cpp" />
-    <ClCompile Include="..\libs\zmq\src\ip.cpp" />
-    <ClCompile Include="..\libs\zmq\src\ipc_address.cpp" />
-    <ClCompile Include="..\libs\zmq\src\ipc_connecter.cpp" />
-    <ClCompile Include="..\libs\zmq\src\ipc_listener.cpp" />
-    <ClCompile Include="..\libs\zmq\src\kqueue.cpp" />
-    <ClCompile Include="..\libs\zmq\src\lb.cpp" />
-    <ClCompile Include="..\libs\zmq\src\mailbox.cpp" />
-    <ClCompile Include="..\libs\zmq\src\mechanism.cpp" />
-    <ClCompile Include="..\libs\zmq\src\metadata.cpp" />
-    <ClCompile Include="..\libs\zmq\src\msg.cpp" />
-    <ClCompile Include="..\libs\zmq\src\mtrie.cpp" />
-    <ClCompile Include="..\libs\zmq\src\norm_engine.cpp" />
-    <ClCompile Include="..\libs\zmq\src\null_mechanism.cpp" />
-    <ClCompile Include="..\libs\zmq\src\object.cpp" />
-    <ClCompile Include="..\libs\zmq\src\options.cpp" />
-    <ClCompile Include="..\libs\zmq\src\own.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pair.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pgm_receiver.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pgm_sender.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pgm_socket.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pipe.cpp" />
-    <ClCompile Include="..\libs\zmq\src\plain_client.cpp" />
-    <ClCompile Include="..\libs\zmq\src\plain_server.cpp" />
-    <ClCompile Include="..\libs\zmq\src\poll.cpp" />
-    <ClCompile Include="..\libs\zmq\src\poller_base.cpp" />
-    <ClCompile Include="..\libs\zmq\src\precompiled.cpp" />
-    <ClCompile Include="..\libs\zmq\src\proxy.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pub.cpp" />
-    <ClCompile Include="..\libs\zmq\src\pull.cpp" />
-    <ClCompile Include="..\libs\zmq\src\push.cpp" />
-    <ClCompile Include="..\libs\zmq\src\random.cpp" />
-    <ClCompile Include="..\libs\zmq\src\raw_decoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\raw_encoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\reaper.cpp" />
-    <ClCompile Include="..\libs\zmq\src\rep.cpp" />
-    <ClCompile Include="..\libs\zmq\src\req.cpp" />
-    <ClCompile Include="..\libs\zmq\src\router.cpp" />
-    <ClCompile Include="..\libs\zmq\src\select.cpp" />
-    <ClCompile Include="..\libs\zmq\src\session_base.cpp" />
-    <ClCompile Include="..\libs\zmq\src\signaler.cpp" />
-    <ClCompile Include="..\libs\zmq\src\socket_base.cpp" />
-    <ClCompile Include="..\libs\zmq\src\socks.cpp" />
-    <ClCompile Include="..\libs\zmq\src\socks_connecter.cpp" />
-    <ClCompile Include="..\libs\zmq\src\stream.cpp" />
-    <ClCompile Include="..\libs\zmq\src\stream_engine.cpp" />
-    <ClCompile Include="..\libs\zmq\src\sub.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tcp.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tcp_address.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tcp_connecter.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tcp_listener.cpp" />
-    <ClCompile Include="..\libs\zmq\src\thread.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tipc_address.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tipc_connecter.cpp" />
-    <ClCompile Include="..\libs\zmq\src\tipc_listener.cpp" />
-    <ClCompile Include="..\libs\zmq\src\trie.cpp" />
-    <ClCompile Include="..\libs\zmq\src\v1_decoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\v1_encoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\v2_decoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\v2_encoder.cpp" />
-    <ClCompile Include="..\libs\zmq\src\xpub.cpp" />
-    <ClCompile Include="..\libs\zmq\src\xsub.cpp" />
-    <ClCompile Include="..\libs\zmq\src\zmq.cpp" />
-    <ClCompile Include="..\libs\zmq\src\zmq_utils.cpp" />
+    <ClCompile Include="..\src\ofxZmq.cpp" />
+    <ClCompile Include="..\src\ofxZmqPair.cpp" />
+    <ClCompile Include="..\src\ofxZmqPublisher.cpp" />
+    <ClCompile Include="..\src\ofxZmqReply.cpp" />
+    <ClCompile Include="..\src\ofxZmqRequest.cpp" />
+    <ClCompile Include="..\src\ofxZmqSocket.cpp" />
+    <ClCompile Include="..\src\ofxZmqSubscriber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\zmq\include\zmq.h" />
-    <ClInclude Include="..\libs\zmq\include\zmq.hpp" />
     <ClInclude Include="..\libs\zmq\include\zmq_utils.h" />
-    <ClInclude Include="..\libs\zmq\src\address.hpp" />
-    <ClInclude Include="..\libs\zmq\src\array.hpp" />
-    <ClInclude Include="..\libs\zmq\src\atomic_counter.hpp" />
-    <ClInclude Include="..\libs\zmq\src\atomic_ptr.hpp" />
-    <ClInclude Include="..\libs\zmq\src\blob.hpp" />
-    <ClInclude Include="..\libs\zmq\src\clock.hpp" />
-    <ClInclude Include="..\libs\zmq\src\command.hpp" />
-    <ClInclude Include="..\libs\zmq\src\config.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ctx.hpp" />
-    <ClInclude Include="..\libs\zmq\src\curve_client.hpp" />
-    <ClInclude Include="..\libs\zmq\src\curve_server.hpp" />
-    <ClInclude Include="..\libs\zmq\src\dbuffer.hpp" />
-    <ClInclude Include="..\libs\zmq\src\dealer.hpp" />
-    <ClInclude Include="..\libs\zmq\src\decoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\devpoll.hpp" />
-    <ClInclude Include="..\libs\zmq\src\dist.hpp" />
-    <ClInclude Include="..\libs\zmq\src\encoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\epoll.hpp" />
-    <ClInclude Include="..\libs\zmq\src\err.hpp" />
-    <ClInclude Include="..\libs\zmq\src\fd.hpp" />
-    <ClInclude Include="..\libs\zmq\src\fq.hpp" />
-    <ClInclude Include="..\libs\zmq\src\gssapi_client.hpp" />
-    <ClInclude Include="..\libs\zmq\src\gssapi_mechanism_base.hpp" />
-    <ClInclude Include="..\libs\zmq\src\gssapi_server.hpp" />
-    <ClInclude Include="..\libs\zmq\src\io_object.hpp" />
-    <ClInclude Include="..\libs\zmq\src\io_thread.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ip.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ipc_address.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ipc_connecter.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ipc_listener.hpp" />
-    <ClInclude Include="..\libs\zmq\src\i_decoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\i_encoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\i_engine.hpp" />
-    <ClInclude Include="..\libs\zmq\src\i_poll_events.hpp" />
-    <ClInclude Include="..\libs\zmq\src\kqueue.hpp" />
-    <ClInclude Include="..\libs\zmq\src\lb.hpp" />
-    <ClInclude Include="..\libs\zmq\src\likely.hpp" />
-    <ClInclude Include="..\libs\zmq\src\mailbox.hpp" />
-    <ClInclude Include="..\libs\zmq\src\mechanism.hpp" />
-    <ClInclude Include="..\libs\zmq\src\metadata.hpp" />
-    <ClInclude Include="..\libs\zmq\src\msg.hpp" />
-    <ClInclude Include="..\libs\zmq\src\mtrie.hpp" />
-    <ClInclude Include="..\libs\zmq\src\mutex.hpp" />
-    <ClInclude Include="..\libs\zmq\src\norm_engine.hpp" />
-    <ClInclude Include="..\libs\zmq\src\null_mechanism.hpp" />
-    <ClInclude Include="..\libs\zmq\src\object.hpp" />
-    <ClInclude Include="..\libs\zmq\src\options.hpp" />
-    <ClInclude Include="..\libs\zmq\src\own.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pair.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pgm_receiver.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pgm_sender.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pgm_socket.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pipe.hpp" />
-    <ClInclude Include="..\libs\zmq\src\plain_client.hpp" />
-    <ClInclude Include="..\libs\zmq\src\plain_server.hpp" />
-    <ClInclude Include="..\libs\zmq\src\platform.hpp" />
-    <ClInclude Include="..\libs\zmq\src\poll.hpp" />
-    <ClInclude Include="..\libs\zmq\src\poller.hpp" />
-    <ClInclude Include="..\libs\zmq\src\poller_base.hpp" />
-    <ClInclude Include="..\libs\zmq\src\precompiled.hpp" />
-    <ClInclude Include="..\libs\zmq\src\proxy.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pub.hpp" />
-    <ClInclude Include="..\libs\zmq\src\pull.hpp" />
-    <ClInclude Include="..\libs\zmq\src\push.hpp" />
-    <ClInclude Include="..\libs\zmq\src\random.hpp" />
-    <ClInclude Include="..\libs\zmq\src\raw_decoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\raw_encoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\reaper.hpp" />
-    <ClInclude Include="..\libs\zmq\src\rep.hpp" />
-    <ClInclude Include="..\libs\zmq\src\req.hpp" />
-    <ClInclude Include="..\libs\zmq\src\router.hpp" />
-    <ClInclude Include="..\libs\zmq\src\select.hpp" />
-    <ClInclude Include="..\libs\zmq\src\session_base.hpp" />
-    <ClInclude Include="..\libs\zmq\src\signaler.hpp" />
-    <ClInclude Include="..\libs\zmq\src\socket_base.hpp" />
-    <ClInclude Include="..\libs\zmq\src\socks.hpp" />
-    <ClInclude Include="..\libs\zmq\src\socks_connecter.hpp" />
-    <ClInclude Include="..\libs\zmq\src\stdint.hpp" />
-    <ClInclude Include="..\libs\zmq\src\stream.hpp" />
-    <ClInclude Include="..\libs\zmq\src\stream_engine.hpp" />
-    <ClInclude Include="..\libs\zmq\src\sub.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tcp.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tcp_address.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tcp_connecter.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tcp_listener.hpp" />
-    <ClInclude Include="..\libs\zmq\src\thread.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tipc_address.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tipc_connecter.hpp" />
-    <ClInclude Include="..\libs\zmq\src\tipc_listener.hpp" />
-    <ClInclude Include="..\libs\zmq\src\trie.hpp" />
-    <ClInclude Include="..\libs\zmq\src\v1_decoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\v1_encoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\v2_decoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\v2_encoder.hpp" />
-    <ClInclude Include="..\libs\zmq\src\v2_protocol.hpp" />
-    <ClInclude Include="..\libs\zmq\src\windows.hpp" />
-    <ClInclude Include="..\libs\zmq\src\wire.hpp" />
-    <ClInclude Include="..\libs\zmq\src\xpub.hpp" />
-    <ClInclude Include="..\libs\zmq\src\xsub.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ypipe.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ypipe_base.hpp" />
-    <ClInclude Include="..\libs\zmq\src\ypipe_conflate.hpp" />
-    <ClInclude Include="..\libs\zmq\src\yqueue.hpp" />
+    <ClInclude Include="..\src\ofxZmq.h" />
+    <ClInclude Include="..\src\ofxZmqConfig.h" />
+    <ClInclude Include="..\src\ofxZmqPair.h" />
+    <ClInclude Include="..\src\ofxZmqPublisher.h" />
+    <ClInclude Include="..\src\ofxZmqReply.h" />
+    <ClInclude Include="..\src\ofxZmqRequest.h" />
+    <ClInclude Include="..\src\ofxZmqSocket.h" />
+    <ClInclude Include="..\src\ofxZmqSubscriber.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F7CD569-F3E4-4C44-991D-01EB9037794E}</ProjectGuid>
@@ -275,6 +107,14 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libzmq.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../addons/ofxZmq/libs/zmq/lib/vs2015/$(Platform)/$(Configuration)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>robocopy "$(ProjectDir)..\..\..\addons\ofxZmq\libs\zmq\bin\vs2015\$(Platform)\$(Configuration)/" "$(SolutionDir)bin/" "*.dll" /njs /njh /np /fp /bytes
+if errorlevel 1 exit 0 else exit %errorlevel%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -285,6 +125,14 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libzmq.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../addons/ofxZmq/libs/zmq/lib/vs2015/$(Platform)/$(Configuration)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>robocopy "$(ProjectDir)..\..\..\addons\ofxZmq\libs\zmq\bin\vs2015\$(Platform)\$(Configuration)/" "$(SolutionDir)bin/" "*.dll" /njs /njh /np /fp /bytes
+if errorlevel 1 exit 0 else exit %errorlevel%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -298,6 +146,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libzmq.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../addons/ofxZmq/libs/zmq/lib/vs2015/$(Platform)/$(Configuration)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>robocopy "$(ProjectDir)..\..\..\addons\ofxZmq\libs\zmq\bin\vs2015\$(Platform)\$(Configuration)/" "$(SolutionDir)bin/" "*.dll" /njs /njh /np /fp /bytes
+if errorlevel 1 exit 0 else exit %errorlevel%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -313,6 +169,14 @@
     </Link>
     <Lib>
     </Lib>
+    <Lib>
+      <AdditionalDependencies>libzmq.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../addons/ofxZmq/libs/zmq/lib/vs2015/$(Platform)/$(Configuration)/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>robocopy "$(ProjectDir)..\..\..\addons\ofxZmq\libs\zmq\bin\vs2015\$(Platform)\$(Configuration)/" "$(SolutionDir)bin/" "*.dll" /njs /njh /np /fp /bytes
+if errorlevel 1 exit 0 else exit %errorlevel%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
