@@ -5,7 +5,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxZmq\src;..\..\..\addons\ofxZmq\libs\libs\zmq\include;..\..\..\addons\ofxZmq\libs\libs\zmq\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxZmq\src;..\..\..\addons\ofxZmq\libs\zmq\include;..\..\..\addons\ofxZmq\libs\zmq\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
