@@ -143,6 +143,12 @@ string ofxZmqSocket::getIdentity()
 	return string(buf, buf + size);
 }
 
+
+bool ofxZmqSocket::isConnected()
+{
+	return this->socket.connected();
+}
+
 void ofxZmqSocket::setHighWaterMark(long maxQueueSize)
 {
 	setReceiveHighWaterMark(maxQueueSize);
