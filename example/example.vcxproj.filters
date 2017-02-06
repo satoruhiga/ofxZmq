@@ -1,27 +1,645 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\testApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\testApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="icon.rc" />
-  </ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmq.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqPair.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqPublisher.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqReply.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqRequest.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqSocket.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\src\ofxZmqSubscriber.cpp">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\address.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\clock.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\ctx.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\curve_client.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\curve_server.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\dealer.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\devpoll.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\dist.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\epoll.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\err.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\fq.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_client.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_mechanism_base.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_server.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\io_object.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\io_thread.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\ip.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_address.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_connecter.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_listener.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\kqueue.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\lb.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\mailbox.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\mechanism.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\metadata.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\msg.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\mtrie.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\norm_engine.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\null_mechanism.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\object.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\options.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\own.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pair.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_receiver.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_sender.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_socket.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pipe.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\plain_client.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\plain_server.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\poll.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\poller_base.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\precompiled.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\proxy.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pub.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\pull.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\push.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\random.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\raw_decoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\raw_encoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\reaper.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\rep.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\req.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\router.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\select.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\session_base.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\signaler.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\socket_base.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\socks.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\socks_connecter.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\stream.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\stream_engine.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\sub.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_address.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_connecter.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_listener.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\thread.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_address.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_connecter.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_listener.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\trie.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\v1_decoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\v1_encoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\v2_decoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\v2_encoder.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\xpub.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\xsub.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\zmq.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\addons\ofxZmq\libs\zmq\src\zmq_utils.cpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq">
+			<UniqueIdentifier>{2C32EA5F-B9FA-46A5-A44F-571D}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq\src">
+			<UniqueIdentifier>{89A03147-8C27-F1AD-564D-81EA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq\libs">
+			<UniqueIdentifier>{06526874-7766-2AD8-06AE-ECBC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq\libs\zmq">
+			<UniqueIdentifier>{3AB84A02-FD16-2DDF-020C-90EC}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq\libs\zmq\include">
+			<UniqueIdentifier>{E011EB5F-CE89-86A8-B762-177A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxZmq\libs\zmq\src">
+			<UniqueIdentifier>{3BDB6C98-6172-AD3E-860D-5E99}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmq.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqConfig.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqPair.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqPublisher.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqReply.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqRequest.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqSocket.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\src\ofxZmqSubscriber.h">
+			<Filter>addons\ofxZmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\include\zmq.h">
+			<Filter>addons\ofxZmq\libs\zmq\include</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\include\zmq.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\include</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\include\zmq_utils.h">
+			<Filter>addons\ofxZmq\libs\zmq\include</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\address.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\array.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\atomic_counter.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\atomic_ptr.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\blob.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\clock.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\command.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\config.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ctx.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\curve_client.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\curve_server.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\dbuffer.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\dealer.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\decoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\devpoll.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\dist.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\encoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\epoll.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\err.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\fd.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\fq.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_client.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_mechanism_base.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\gssapi_server.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\io_object.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\io_thread.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ip.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_address.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_connecter.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ipc_listener.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\i_decoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\i_encoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\i_engine.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\i_poll_events.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\kqueue.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\lb.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\likely.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\mailbox.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\mechanism.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\metadata.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\msg.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\mtrie.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\mutex.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\norm_engine.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\null_mechanism.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\object.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\options.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\own.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pair.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_receiver.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_sender.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pgm_socket.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pipe.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\plain_client.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\plain_server.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\platform.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\poll.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\poller.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\poller_base.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\precompiled.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\proxy.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pub.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\pull.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\push.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\random.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\raw_decoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\raw_encoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\reaper.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\rep.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\req.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\router.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\select.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\session_base.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\signaler.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\socket_base.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\socks.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\socks_connecter.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\stdint.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\stream.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\stream_engine.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\sub.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_address.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_connecter.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tcp_listener.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\thread.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_address.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_connecter.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\tipc_listener.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\trie.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\v1_decoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\v1_encoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\v2_decoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\v2_encoder.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\v2_protocol.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\windows.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\wire.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\xpub.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\xsub.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ypipe.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ypipe_base.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\ypipe_conflate.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxZmq\libs\zmq\src\yqueue.hpp">
+			<Filter>addons\ofxZmq\libs\zmq\src</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
 </Project>
