@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\zmq\include\zmq.h" />
+    <ClInclude Include="..\libs\zmq\include\zmq.hpp" />
     <ClInclude Include="..\libs\zmq\include\zmq_utils.h" />
     <ClInclude Include="..\src\ofxZmq.h" />
     <ClInclude Include="..\src\ofxZmqConfig.h" />

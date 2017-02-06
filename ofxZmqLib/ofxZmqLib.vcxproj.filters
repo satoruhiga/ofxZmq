@@ -68,5 +68,8 @@
     <ClInclude Include="..\libs\zmq\include\zmq_utils.h">
       <Filter>libs\zmq\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\libs\zmq\include\zmq.hpp">
+      <Filter>libs\zmq\include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
