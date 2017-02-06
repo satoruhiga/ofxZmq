@@ -1,9 +1,6 @@
 #include "ofApp.h"
 
-#include "ofxZmq.h"
 
-ofxZmqSubscriber subscriber;
-ofxZmqPublisher publisher;
 
 //--------------------------------------------------------------
 void ofApp::setup()
