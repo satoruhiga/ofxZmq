@@ -16,7 +16,7 @@ static zmq::context_t& ofxZmqContext()
 ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
 {
 	zmq::pollitem_t item;
-	item.socket = socket;
+	item.socket = (void*)socket;
 	item.fd = 0;
 	item.events = ZMQ_POLLIN;
 	item.revents = 0;
