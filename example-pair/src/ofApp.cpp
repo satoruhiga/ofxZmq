@@ -11,7 +11,7 @@ void ofApp::setup()
 	connection.bind("tcp://*:9999");
 	
 	// start client
-	connection.connect("tcp://localhost:9999");
+	connection.connect("tcp://rpi3.local:9999");
 }
 
 //--------------------------------------------------------------
