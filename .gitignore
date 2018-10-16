@@ -34,3 +34,9 @@ Release/
 *~.xml
 
 Sketch*/
+/example*/Makefile
+/example*/openFrameworks-Info.plist
+/example*/.gitignore
+/example*/config.make
+/example*/Project.xcconfig
+/example*/example-basic.xcodeproj
