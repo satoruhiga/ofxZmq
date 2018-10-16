@@ -60,6 +60,8 @@ common:
 linuxarmv6l:
 	ADDON_CFLAGS = -I$(RPI_ROOT)/usr/include/
 	ADDON_LDFLAGS = -lzmq
+	ADDON_SOURCES_EXCLUDE = libs/%
+
 
 
 linuxarmv7l:
