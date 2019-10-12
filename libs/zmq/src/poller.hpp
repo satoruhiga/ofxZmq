@@ -50,10 +50,6 @@
 #include "select.hpp"
 #else
 #error None of the ZMQ_USE_* macros defined
-#include "kqueue.hpp"
-#include "epoll.hpp"
-#include "devpoll.hpp"
-#include "select.hpp"
 #endif
 
 #if defined ZMQ_USE_SELECT
