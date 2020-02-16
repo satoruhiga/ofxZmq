@@ -47,6 +47,12 @@ void ofxZmqSocket::unbind(string addr)
 	socket.unbind(addr.c_str());
 }
 
+string ofxZmqSocket::getLastEndpoint() {
+    char port[1024];
+    size_t size = sizeof(port);
+    socket.getsockopt(ZMQ_LAST_ENDPOINT, &port, &size);
+    return std::string( port );
+}
 
 bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool more)
 {
