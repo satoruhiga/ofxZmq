@@ -16,7 +16,7 @@ static zmq::context_t& ofxZmqContext()
 ofxZmqSocket::ofxZmqSocket(int type) : socket(ofxZmqContext(), type)
 {
 	zmq::pollitem_t item;
-	item.socket = socket;
+	item.socket = (void*)socket;
 	item.fd = 0;
 	item.events = ZMQ_POLLIN;
 	item.revents = 0;
@@ -47,6 +47,12 @@ void ofxZmqSocket::unbind(string addr)
 	socket.unbind(addr.c_str());
 }
 
+string ofxZmqSocket::getLastEndpoint() {
+    char port[1024];
+    size_t size = sizeof(port);
+    socket.getsockopt(ZMQ_LAST_ENDPOINT, &port, &size);
+    return std::string( port );
+}
 
 bool ofxZmqSocket::send(const void *data, size_t len, bool nonblocking, bool more)
 {

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxZmq.h"
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 
 	public:
 		void setup();
@@ -18,5 +19,9 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    
+    //ofxZmqSubscriber* zmqSubscriber;
+    //ofxZmqPublisher* zmqPublisher;
 		
 };

@@ -24,6 +24,8 @@ public:
 	long getSendHighWaterMark();
 	long getReceiveHighWaterMark();
 
+    string getLastEndpoint();
+
 protected:
 
 	zmq::socket_t socket;
